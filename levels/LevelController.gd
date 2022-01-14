@@ -8,7 +8,7 @@ func _ready():
 	Net.connect("camera", self, "camera")
 	Net.set_current_level(self)
 	Net.rpc("world_ready")
-	Net.register_person("Rido")
+	print("Path: ", Net.register_person("Rido"))
 
 func add_person(pathname, scene):
 	if not get_node(pathname):

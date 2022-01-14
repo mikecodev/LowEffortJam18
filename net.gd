@@ -26,7 +26,6 @@ func run_as_client():
 
 
 func set_current_level(levelNode):
-	print("set_current_level")
 	world = levelNode
 # ----------
 # CONNECTION
@@ -78,7 +77,6 @@ func register_person(name, pos = Vector2(5, 5), id = 0):
 		return pi.get_path()
 	
 func broadcast_world():
-	print("broadcast_world")
 	for pid in players:
 		var p = players[pid]
 		rpc("instance_person", p.name, p.pathname, p.body.global_position)
@@ -106,7 +104,6 @@ puppet func instance_person(name: String, pathname, position: Vector2):
 		var pi = c_person.instance()
 		pi.name = pathname
 		pi.global_position = position
-		print("pos: ", position)
 		world.add_child(pi)
 		
 puppet func camera_target(pathname: String):
