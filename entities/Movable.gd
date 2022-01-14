@@ -23,7 +23,7 @@ func _physics_process(delta):
 	velocity = Vector2.ZERO
 	if v_buffer.length() > 0:
 		velocity = lerp(velocity, Vector2(v_buffer[0], v_buffer[1]) * speed * delta, acceleration)
-		if velocity[0] > 5:
+		if abs(velocity[0]) > 1:
 			if velocity[0] > 0:
 				update_play("right")
 			else:
@@ -35,7 +35,7 @@ func _physics_process(delta):
 				update_play("down")
 	else:
 		velocity = lerp(velocity, Vector2.ZERO, friction)
-		if velocity[0] > 5:
+		if abs(velocity[0]) > 1:
 			if velocity[0] > 0:
 				update_play("idleright")
 			else:

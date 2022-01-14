@@ -139,5 +139,4 @@ shape = SubResource( 1 )
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 4 )
 animation = "idleleft"
-frame = 1
 playing = true
