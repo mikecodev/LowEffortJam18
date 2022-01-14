@@ -1,16 +1,24 @@
 extends Node
 
+var QEUEU_SIZE : int = 5
+var QEUE_START : Vector2
+var SPRITE_HEIGHT : int = 16
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
 
+var FreeTables : Array = []
+var QueuedClients : Array = []
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	set_process(false)
+func AddTable(Table):
+	FreeTables.append(Table)
+func RemoveTable(Table):
+	var Pos = FreeTables.rfind(Table)
+	if(Pos != -1):
+		FreeTables.remove(Pos)
+	return Pos
+func EnterQueue(Client, Destination) -> bool:
+	return false
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func ArrivedToQueueDestination(Client):
+	pass

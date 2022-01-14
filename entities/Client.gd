@@ -34,13 +34,13 @@ func _ready():
 	Movable = get_node(MovablePath)
 	Movable.connect("PositionArrived", self, "OnPositionArrival")
 	$PatienceTimer.connect("timeout", self, "MyPatienceIsGrowingSmaller")
-	# ClientManager = get_node("/root/client_manager")
+	# ClientManager = get_node("/root/ClientManager")
 	# Movable.move_to(Defines.EnterPosition)
 
 func AskForQueueSpace():	
 	var Destination : Vector2
 	var QueueEntered = false
-	# bool QueueEntered = client_manager.EnterQueue(self, Destination)
+	# bool QueueEntered = ClientManager.EnterQueue(self, Destination)
 	
 	if QueueEntered:
 		State.WalkingToQueue
@@ -51,7 +51,7 @@ func AskForQueueSpace():
 func WaitForATable():
 	State = State.Queuing
 	$PatienceTimer.start()
-	# ClientManager.ArriveToDestination(self)
+	# ClientManager.ArrivedToQueueDestination(self)
 func WaitForFood():
 	State = State.WaitingForFood
 	# TODO: Either choose a random food now or this should be done outside this class or in the ready
