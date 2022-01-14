@@ -1,14 +1,7 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://sprites/pizza01.png" type="Texture" id=1]
-[ext_resource path="res://sprites/pizza02.png" type="Texture" id=3]
+[ext_resource path="res://levels/LevelController.gd" type="Script" id=2]
 [ext_resource path="res://sprites/tileset.png" type="Texture" id=4]
-
-[sub_resource type="CircleShape2D" id=1]
-radius = 8.0
-
-[sub_resource type="CircleShape2D" id=6]
-radius = 5.09902
 
 [sub_resource type="TileSet" id=7]
 0/name = "tileset.png 0"
@@ -279,38 +272,7 @@ radius = 5.09902
 18/z_index = 0
 
 [node name="MainScene" type="Node2D"]
-
-[node name="PizzaBig" type="Area2D" parent="."]
-position = Vector2( 114, 138 )
-z_index = 10
-
-[node name="Sprite" type="Sprite" parent="PizzaBig"]
-texture = ExtResource( 1 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PizzaBig"]
-shape = SubResource( 1 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="PizzaSmall" type="Area2D" parent="."]
-position = Vector2( 77, 137 )
-z_index = 10
-
-[node name="Sprite" type="Sprite" parent="PizzaSmall"]
-texture = ExtResource( 3 )
-__meta__ = {
-"_edit_lock_": true
-}
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PizzaSmall"]
-shape = SubResource( 6 )
-__meta__ = {
-"_edit_lock_": true
-}
+script = ExtResource( 2 )
 
 [node name="Ground" type="TileMap" parent="."]
 tile_set = SubResource( 7 )
