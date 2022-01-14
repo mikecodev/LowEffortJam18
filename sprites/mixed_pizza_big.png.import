@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/pizza02.png-4be7eebf2068b552f0212dfdbe952e01.stex"
+path="res://.import/mixed_pizza_big.png-0d096d6b78f5fcf42466144ddafeb710.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/pizza02.png"
-dest_files=[ "res://.import/pizza02.png-4be7eebf2068b552f0212dfdbe952e01.stex" ]
+source_file="res://sprites/mixed_pizza_big.png"
+dest_files=[ "res://.import/mixed_pizza_big.png-0d096d6b78f5fcf42466144ddafeb710.stex" ]
 
 [params]
 
