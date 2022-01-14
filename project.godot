@@ -17,6 +17,7 @@ config/icon="res://icon.png"
 [autoload]
 
 Net="*res://net.gd"
+ClientManager="*res://autoloads/ClientManager.gd"
 
 [display]
 
