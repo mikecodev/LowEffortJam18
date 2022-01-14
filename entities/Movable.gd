@@ -69,7 +69,6 @@ func update_play(anim):
 		
 remotesync func play(anim):
 	if Net.is_from_server():
-		print("play ", anim)
 		$AnimatedSprite.play(anim)
 
 puppet func puppet_move(origin):
