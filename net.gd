@@ -75,7 +75,7 @@ func register_person(name, pos = Vector2(5, 5), id = 0):
 		pi.global_position = pos
 		world.add_child(pi)
 		broadcast_world()
-		return pathname
+		return pi.get_path()
 	
 func broadcast_world():
 	print("broadcast_world")
