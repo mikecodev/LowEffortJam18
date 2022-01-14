@@ -21,7 +21,7 @@ func run_as_server():
 
 func run_as_client():
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_client("127.0.0.1", 29002)
+	peer.create_client("galax.be", 29002)
 	get_tree().network_peer = peer
 
 
