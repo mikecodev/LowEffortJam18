@@ -69,7 +69,6 @@ func _physics_process(delta):
 
 func move(direction):
 	if is_network_master():
-		print("player moved by server")
 		v_buffer = direction * speed
 	
 func move_to(target_position: Vector2):
