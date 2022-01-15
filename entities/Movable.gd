@@ -35,15 +35,14 @@ func _physics_process(delta):
 				update_play("down")
 	else:
 		velocity = lerp(velocity, Vector2.ZERO, friction)
-		if abs(velocity[0]) > 1:
-			if velocity[0] > 0:
+		match animation:
+			"right":
 				update_play("idleright")
-			else:
+			"left":
 				update_play("idleleft")
-		else:
-			if velocity[1] < 0:
+			"up":
 				update_play("idleup")
-			else:
+			"down":
 				update_play("idledown")
 	velocity = move_and_slide(velocity)
 	rpc_unreliable("puppet_move", transform.origin)
