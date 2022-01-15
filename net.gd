@@ -101,7 +101,6 @@ func broadcast_world():
 		rpc("instance_person", p.name, p.pathname, p.body.global_position)
 	
 master func move_player(input_v: Vector2):
-	print("move player")
 	players[get_id()].body.move(input_v)
 
 master func skill_input(num: int, direction: Vector2):
