@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+signal path_done
+
 export var speed = 200
 export var friction = 0.01
 export var acceleration = 0.1
@@ -35,7 +37,6 @@ func set_name(name):
 func _physics_process(delta):
 	if path and path.size() > 0:
 		move_along_path()
-	
 	velocity = Vector2.ZERO
 	if v_buffer.length() > 0:
 		velocity = lerp(velocity, Vector2(v_buffer[0], v_buffer[1]) * speed * delta, acceleration)
@@ -86,6 +87,8 @@ func move_along_path():
 			v_buffer = (Vector2(px, py) - start_point).normalized() * speed
 			break
 		path.remove(0)
+	if path.size() == 0:
+		emit_signal("path_done")
 	
 func freeze(time: float):
 	if is_network_master():
