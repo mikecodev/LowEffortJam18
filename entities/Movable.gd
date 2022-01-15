@@ -32,7 +32,7 @@ func _physics_process(delta):
 	velocity = Vector2.ZERO
 	if v_buffer.length() > 0:
 		# Neutralize diagonal movement
-		if abs(v_buffer[0]) > 0: v_buffer[1] = 0
+		# if abs(v_buffer[0]) > 0: v_buffer[1] = 0
 		velocity = lerp(velocity, Vector2(v_buffer[0], v_buffer[1]) * speed * delta, acceleration)
 		if abs(velocity[0]) > 1:
 			if velocity[0] > 0:
