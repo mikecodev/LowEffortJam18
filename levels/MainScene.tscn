@@ -1,5 +1,6 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
+[ext_resource path="res://entities/GUI/HUD.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels/LevelController.gd" type="Script" id=2]
 [ext_resource path="res://sprites/tileset.png" type="Texture" id=4]
 
@@ -425,3 +426,7 @@ cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 format = 1
 tile_data = PoolIntArray( 1, 0, 0, 2, 2, 0, 3, 1, 0, 4, 1, 0, 5, 2, 0, 6, 2, 0, 7, 2, 0, 8, 2, 0, 9, 2, 0, 10, 2, 0, 11, 2, 0, 12, 2, 0, 13, 2, 0, 14, 2, 0, 15, 2, 0, 16, 2, 0, 17, 2, 0, 18, 3, 0, 65537, 9, 0, 65538, 20, 0, 65554, 4, 0, 131073, 9, 0, 131090, 4, 0, 196609, 9, 0, 196623, 19, 0, 196626, 4, 0, 262145, 9, 0, 262162, 4, 0, 327681, 9, 0, 327684, 19, 0, 327698, 4, 0, 393217, 9, 0, 393234, 4, 0, 458753, 9, 0, 458764, 19, 0, 458770, 4, 0, 524289, 9, 0, 524306, 4, 0, 589825, 9, 0, 589842, 4, 0, 655361, 8, 0, 655362, 6, 0, 655363, 6, 0, 655364, 6, 0, 655365, 7, 0, 655366, 6, 0, 655367, 6, 0, 655368, 6, 0, 655369, 6, 0, 655370, 6, 0, 655371, 6, 0, 655372, 6, 0, 655373, 6, 0, 655374, 6, 0, 655375, 6, 0, 655376, 6, 0, 655377, 6, 0, 655378, 5, 0 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" parent="CanvasLayer" instance=ExtResource( 1 )]
