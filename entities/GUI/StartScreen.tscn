@@ -47,6 +47,7 @@ __meta__ = {
 }
 
 [node name="Local" type="Tabs" parent="Menu"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -74,7 +75,6 @@ __meta__ = {
 }
 
 [node name="Online" type="Tabs" parent="Menu"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -119,7 +119,7 @@ rect_min_size = Vector2( 50, 15 )
 rect_clip_content = false
 size_flags_vertical = 0
 bbcode_enabled = true
-bbcode_text = "[center][rainbow freq=0.2 sat=10 val=20]BETA[/rainbow][/center]"
+bbcode_text = "[center][rainbow freq=1.2 sat=10 val=20]BETA[/rainbow][/center]"
 text = "BETA"
 scroll_active = false
 

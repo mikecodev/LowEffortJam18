@@ -16,7 +16,6 @@ enum STATE {
 
 export(float, 0, 1) var Patience : float
 export(int, 0, 100) var Satisfaction : int
-export var MovablePath : NodePath
 
 export var TargetPizzaSize = 0
 export var TargetPizzaTopping = 0
@@ -25,25 +24,26 @@ var State = STATE.Entering;
 var Movable
 var ClientManager
 
+# tmp
+var Destination
+
 # Output
 var Tip = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_process(false)
+	var MovablePath = Net.register_person("NPC", Defs.SPAWN_POS)
 	Movable = get_node(MovablePath)
-	Movable.connect("PositionArrived", self, "OnPositionArrival")
+	Movable.connect("path_done", self, "OnPositionArrival")
 	$PatienceTimer.connect("timeout", self, "MyPatienceIsGrowingSmaller")
-	# TODO: Client Manager is an autoload for now, but there should be one per online game
-	# ClientManager = get_node("/root/ClientManager")
-	# Movable.move_to(Defines.EnterPosition)
+	ClientManager = get_node("/root/ClientManager")
+	Movable.move_to(Defs.ENTRY_POS)
 
 func AskForQueueSpace():	
-	var Destination : Vector2
-	var QueueEntered = ClientManager.EnterQueue(self, Destination)
-	
+	var QueueEntered = ClientManager.EnterQueue(self)
 	if QueueEntered:
-		State.WalkingToQueue
+		STATE.WalkingToQueue
 		Movable.move_to(Destination)
 	else:
 		# TODO: Do we want pissed off clients that just enter the venue?
@@ -64,7 +64,7 @@ func LeaveAndTip():
 		printerr("Client Error: LeaveAndTip received but state wasn't finished eating. State = ", State)
 func Leave():
 	State = STATE.Leaving
-	# Movable.move_to(Defines.ExitPosition)
+	Movable.move_to(Defs.EXIT_POS)
 func ExitStore():
 	# TODO: Open the door, leave the store and QueueFree
 	queue_free()
@@ -78,13 +78,13 @@ func OnFreeTable(Destination : Vector2):
 		return false
 func OnPositionArrival():
 	match State:
-		State.Entering:
+		STATE.Entering:
 			AskForQueueSpace()
-		State.WalkingToQueue:
+		STATE.WalkingToQueue:
 			WaitForATable()
-		State.WalkingToTable:
+		STATE.WalkingToTable:
 			WaitForFood()
-		State.Leaving:
+		STATE.Leaving:
 			ExitStore()
 		_:
 			printerr("Client Error: Unexpected OnPositionArrival received when state is ", State)
@@ -101,31 +101,3 @@ func MyPatienceIsGrowingSmaller():
 	if Satisfaction == 0:
 		Leave()
 	# TODO: Also add an object and call it here to update the patience visual effect
-	
-"""
-
-Resultados:
-
-#### Estado: Comiendo
-
-Durante X tiempo, el cliente comerá y dependiendo de lo satisfecho que esté (tiempo que se tardó en atenderlo y pizza servida) dejará una propina y pasará al estado terminado de comer.
-
-#### TerminadoDeComer
-
-El cliente lanzará una señal con la propina que desee dejar y esperará a recibir la orden de la mesa de que ya puede marcharse. Esto es por si el cliente no está solo para no abandonar a su amigo. Sería muy descortés.
-
-Al recibir un mensaje de la mesa de que todos han terminado de comer, pasará al estado abandonando.
-
-#### CabreadoAMuerte
-
-Al entrar en este estado, el cliente se dirigirá hacia un empleado y le golpeará, tirando la pizza al suelo si el empleado fuese cargando una pizza. Si el empleado no fuese cargando ninguna pizza, se aplicará un ministun.
-
-#### Estado: Abandonando
-
-El cliente se moverá hacia la salida y lanzará una señal para decir que ha abandonado el establecimiento (la mesa que toque recibirá esa señal y actuará en consecuencia).
-
-## Mesas
-
-- Tendrán un número indeterminado de sillas
-- Tendrán entre 1 y Número de sillas clientes
-"""

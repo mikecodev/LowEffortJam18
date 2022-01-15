@@ -446,3 +446,6 @@ visible = false
 visible = false
 points = PoolVector2Array( 130, 165 )
 width = 1.0
+
+[node name="Position2D" type="Position2D" parent="."]
+position = Vector2( 286, 84 )

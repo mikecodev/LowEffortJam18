@@ -6,23 +6,13 @@ var entites = {}
 func _ready():
 	Net.set_current_level(self)
 	if is_network_master() and not Net.is_local:
-		var p = Net.register_person("Rido")
-		move_demo(get_node(p))
+		ClientManager.Start()
 
 func Start():
 	Net.rpc("world_ready")
 	if Net.is_local:
-		# TODO: Put all the logic here
-		var p = Net.register_person("Rido")
-		move_demo(get_node(p))
+		ClientManager.Start()
 	$CanvasLayer/HUD.visible = true
-
-func move_demo(npc):
-	while true:
-		npc.move_to(Vector2(282, 62))
-		yield(get_tree().create_timer(15), "timeout")
-		npc.move_to(Vector2(10, 10))
-		yield(get_tree().create_timer(15), "timeout")
 
 func add_person(pathname, scene):
 	if not get_node(pathname):

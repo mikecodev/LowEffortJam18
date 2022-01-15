@@ -11,10 +11,14 @@ func _on_Online_button_up():
 	if Nickname.text == "" or Nickname.text.length() < 3:
 		Nickname.modulate = Color(1,0.6,0.6,1)
 		return
+	$Menu/Local/CenterContainer/Local.disabled = true
+	$Menu/Online/VBoxContainer/Online.disabled = true
 	Net.run_as_client()
 	yield(Net, "Connected")
 	Net.rpc_id(1, "register_player", Nickname.text)
 func _on_Local_button_up():
+	$Menu/Local/CenterContainer/Local.disabled = true
+	$Menu/Online/VBoxContainer/Online.disabled = true
 	Net.run_local()
 	Net.rpc("register_player", "Player")
 func _on_Nickname_text_changed(new_text):
