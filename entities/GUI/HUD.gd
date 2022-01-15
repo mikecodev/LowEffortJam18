@@ -1,4 +1,4 @@
-extends MarginContainer
+extends PanelContainer
 
 signal GameFinished(Points)
 
