@@ -4,6 +4,7 @@ signal camera(pathname)
 
 signal StartLocal()
 signal StartOnline()
+signal Connected()
 
 const PLAYER_SPAWN = Vector2(70, 70)
 
@@ -47,10 +48,10 @@ func _player_disconnected(id):
 			p.body.get_parent().remove_child(p.body)
 		rpc("remove_entity", p.pathname)
 		players.erase(id)
-
 # Only called on clients, not server.
 func _connected_ok():
 	print("connected to server")
+	emit_signal("Connected")
 
 # Server kicked us
 func _server_disconnected():
@@ -65,7 +66,6 @@ func _connected_fail():
 # RPCs client --> server
 
 master func register_player(name):
-	print("reg1")
 	if is_local:
 		var w = c_world.instance()
 		add_child(w)
@@ -76,7 +76,6 @@ master func register_player(name):
 	var id = get_id()
 	register_person(name, PLAYER_SPAWN, id)
 	rpc_id(id, "load_world")
-	print("reg2")
 	
 func register_person(name, pos = Vector2(5, 5), id = 0):
 	if is_network_master():
