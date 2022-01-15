@@ -10,7 +10,7 @@ func _ready():
 	Net.rpc("world_ready")
 	if is_network_master():
 		var p = Net.register_person("Rido")
-		get_node(p).move_to(Vector2(200, 200))
+		move_demo(get_node(p))
 
 func move_demo(npc):
 	while true:
