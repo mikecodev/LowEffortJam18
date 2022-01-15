@@ -14,10 +14,10 @@ func _ready():
 
 func move_demo(npc):
 	while true:
-		npc.move_to(Vector2(100, 100))
-		yield(get_tree().create_timer(5), "timeout")
+		npc.move_to(Vector2(282, 62))
+		yield(get_tree().create_timer(15), "timeout")
 		npc.move_to(Vector2(10, 10))
-		yield(get_tree().create_timer(5), "timeout")
+		yield(get_tree().create_timer(15), "timeout")
 
 func add_person(pathname, scene):
 	if not get_node(pathname):

@@ -5,6 +5,7 @@ export var friction = 0.01
 export var acceleration = 0.1
 
 onready var navigation: Navigation2D = get_parent().get_node("Navigation2D")
+onready var debugpath: Line2D = get_parent().get_node("DebugPath")
 
 onready var allow_animation_change_timer = Timer.new()
 var allow_animation_change = true
@@ -33,13 +34,10 @@ func set_name(name):
 	
 func _physics_process(delta):
 	if path and path.size() > 0:
-		move_along_path(speed * delta)
-		return
+		move_along_path()
 	
 	velocity = Vector2.ZERO
 	if v_buffer.length() > 0:
-		# Neutralize diagonal movement
-		# if abs(v_buffer[0]) > 0: v_buffer[1] = 0
 		velocity = lerp(velocity, Vector2(v_buffer[0], v_buffer[1]) * speed * delta, acceleration)
 		if abs(velocity[0]) > 1:
 			if velocity[0] > 0:
@@ -74,20 +72,20 @@ func move(direction):
 func move_to(target_position: Vector2):
 	path = navigation.get_simple_path(global_position, target_position)
 	
-func move_along_path(distance: float):
-	var start_point := position
+func move_along_path():
+	var start_point := global_position
+	if debugpath:
+		debugpath.points = path
 	for i in range(path.size()):
-		var distance_to_next := start_point.distance_to(path[0])
-		if distance <= distance_to_next and distance >= 0.0:
-			position = start_point.linear_interpolate(path[0], distance / distance_to_next)
+		var x = path[0][0]
+		var y = path[0][1]
+		var px = int(x) - (int(x) % 16) + 8
+		var py = int(y) - (int(y) % 16) + 8
+		var distance_to_next := start_point.distance_to(Vector2(px, py))
+		if distance_to_next > 1:
+			v_buffer = (Vector2(px, py) - start_point).normalized() * speed
 			break
-		elif distance < 0.0:
-			position = path[0]
-			break
-		distance -= distance_to_next
-		start_point = path[0]
 		path.remove(0)
-	
 	
 func freeze(time: float):
 	if is_network_master():
