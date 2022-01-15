@@ -5,14 +5,21 @@ signal camera(pathname)
 const PLAYER_SPAWN = Vector2(30, 30)
 
 const c_person = preload("res://entities/Movable.tscn")
+const c_world = preload("res://levels/MainScene.tscn")
 var players = {}
 var world: Node2D
+
+var is_local = false
 
 func _ready():
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_ok")
 	get_tree().connect("connection_failed", self, "_connected_fail")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
+
+func run_local():
+	run_as_server()
+	is_local = true
 
 func run_as_server():
 	var peer = NetworkedMultiplayerENet.new()
@@ -55,6 +62,12 @@ func _connected_fail():
 # RPCs client --> server
 
 master func register_player(name):
+	if is_local:
+		var w = c_world.instance()
+		add_child(w)
+		world = w
+		var m = get_node("/root/Menu")
+		m.get_parent().remove_child(m)
 	var id = get_id()
 	register_person(name, PLAYER_SPAWN, id)
 	rpc_id(id, "load_world")
@@ -90,25 +103,22 @@ master func skill_input(num: int, direction: Vector2):
 master func world_ready():
 	broadcast_world()
 	var id = get_id()
-	rpc_id(id, "camera_target", players[id].pathname)
 	
 # ----
 # RPCs server --> client
 	
-puppet func load_world():
+remotesync func load_world():
+	if is_network_master() and is_local: return
 	if is_from_server():
 		get_tree().change_scene("res://levels/MainScene.tscn")
 
-puppet func instance_person(name: String, pathname, position: Vector2):
+remotesync func instance_person(name: String, pathname, position: Vector2):
+	if is_network_master() and is_local: return
 	if is_from_server() and world:
 		var pi = c_person.instance()
 		pi.name = pathname
 		pi.global_position = position
 		world.add_child(pi)
-		
-puppet func camera_target(pathname: String):
-	if is_from_server():
-		emit_signal("camera", pathname)
 		
 remotesync func remove_entity(pathname: String):
 	if is_from_server():
@@ -122,5 +132,6 @@ func get_id():
 	return get_tree().get_rpc_sender_id()
 
 func is_from_server() -> bool:
+	if is_local: return true
 	return get_tree().get_rpc_sender_id() == 1
 
