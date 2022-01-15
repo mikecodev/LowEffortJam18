@@ -17,6 +17,5 @@ func _on_Online_button_up():
 func _on_Local_button_up():
 	Net.run_local()
 	Net.rpc("register_player", "Player")
-	queue_free()
 func _on_Nickname_text_changed(new_text):
 	Nickname.modulate = Color.white

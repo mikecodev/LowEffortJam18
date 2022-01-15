@@ -69,6 +69,7 @@ master func register_player(name):
 	if is_local:
 		var w = c_world.instance()
 		add_child(w)
+		w.visible = false
 		world = w
 		emit_signal("StartLocal", w)
 		# var m = get_node("/root/Menu")

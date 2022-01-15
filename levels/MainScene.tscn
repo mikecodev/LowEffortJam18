@@ -440,6 +440,7 @@ navpoly = SubResource( 19 )
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="HUD" parent="CanvasLayer" instance=ExtResource( 1 )]
+visible = false
 
 [node name="DebugPath" type="Line2D" parent="."]
 visible = false

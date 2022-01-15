@@ -25,4 +25,11 @@ func OnStartOnline():
 	World.Start()
 
 func OnStartLocal(World):
-	print("Start local ", World.name)
+	$Transition.ShadeIn(2)
+	yield($Transition, "AnimationFinished")
+	get_node(CurrentScene).queue_free()
+	CurrentScene = World.get_path()
+	World.visible = true
+	$Transition.ShadeOut(2)
+	yield($Transition, "AnimationFinished")
+	World.Start()
