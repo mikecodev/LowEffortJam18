@@ -65,6 +65,7 @@ func _connected_fail():
 # RPCs client --> server
 
 master func register_player(name):
+	print("reg1")
 	if is_local:
 		var w = c_world.instance()
 		add_child(w)
@@ -75,6 +76,7 @@ master func register_player(name):
 	var id = get_id()
 	register_person(name, PLAYER_SPAWN, id)
 	rpc_id(id, "load_world")
+	print("reg2")
 	
 func register_person(name, pos = Vector2(5, 5), id = 0):
 	if is_network_master():
@@ -112,8 +114,11 @@ master func world_ready():
 # RPCs server --> client
 	
 remotesync func load_world():
+	print("1")
 	if is_local or is_network_master(): return
+	print("2")
 	if is_from_server():
+		print("3")
 		emit_signal("StartOnline")
 
 remotesync func instance_person(name: String, pathname, position: Vector2):

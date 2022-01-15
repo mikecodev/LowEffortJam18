@@ -16,7 +16,7 @@ func _on_Online_button_up():
 		Nickname.modulate = Color(1,0.6,0.6,1)
 		return
 	Net.run_as_client()
-	Net.rpc("register_player", Nickname.text)
+	Net.rpc_id(1, "register_player", Nickname.text)
 
 
 func _on_Local_button_up():
