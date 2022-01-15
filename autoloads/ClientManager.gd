@@ -20,20 +20,20 @@ func RemoveTable(Table):
 	return Pos
 
 # TODO: Perhaps get groups of people linked together when arriving, so instead of a client we receive a list of clients?
-func EnterQueue(Client, Destination) -> bool:
+func EnterQueue(Client, _Destination) -> bool:
 	if QueuedClients.size() < QUEUE_SIZE:
 		QueuedClients.push_back(Client)
-		Destination = Vector2(QEUE_START.x, QEUE_START.y + (QueuedClients.size()-1)*SPRITE_HEIGHT)
+		_Destination = Vector2(QEUE_START.x, QEUE_START.y + (QueuedClients.size()-1)*SPRITE_HEIGHT)
 		return true
 	return false
 
-func ArrivedToQueueDestination(Client):
+func ArrivedToQueueDestination():
 	while(FreeTables.size() > 0 and QueuedClients.size() > 0 and QueuedClients[0].Queuing):
 		var Table = FreeTables.pop_front()
 		# TODO: So far we have no groups, so we are just sitting random people together. This should change to customers arriving together
 		var NumClients = rand_range(1, min(Table.Seats.size(), QueuedClients.size()))
 		var ClientsToSit = []
-		for n in range(NumClients):
+		for _n in range(NumClients):
 			ClientsToSit.append(QueuedClients.pop_front())
 		Table.Sit(ClientsToSit)
 		

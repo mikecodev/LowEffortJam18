@@ -51,7 +51,7 @@ func AskForQueueSpace():
 func WaitForATable():
 	State = State.Queuing
 	$PatienceTimer.start()
-	ClientManager.ArrivedToQueueDestination(self)
+	ClientManager.ArrivedToQueueDestination()
 func WaitForFood():
 	State = State.WaitingForFood
 	# TODO: Either choose a random food now or this should be done outside this class or in the ready
