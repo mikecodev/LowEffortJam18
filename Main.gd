@@ -16,12 +16,13 @@ func _ready():
 func OnStartOnline():
 	$Transition.ShadeIn(2)
 	yield($Transition, "AnimationFinished")
-	CurrentScene.queue_free()
-	CurrentScene = WORLD_SCENE.instance()
-	add_child(CurrentScene)
+	get_node(CurrentScene).queue_free()
+	var World = WORLD_SCENE.instance()
+	add_child(World)
+	CurrentScene = World.get_path()
 	$Transition.ShadeOut(2)
 	yield($Transition, "AnimationFinished")
-	CurrentScene.Start()
+	World.Start()
 
 func OnStartLocal(World):
 	print("Start local ", World.name)
