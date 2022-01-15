@@ -2,15 +2,15 @@ extends Node2D
 
 const c_person = preload("res://entities/Movable.tscn")
 var entites = {}
-var cameraTarget: String
 
 func _ready():
-	Net.connect("camera", self, "camera")
 	Net.set_current_level(self)
-	Net.rpc("world_ready")
 	if is_network_master():
 		var p = Net.register_person("Rido")
 		move_demo(get_node(p))
+
+func Start():
+	Net.rpc("world_ready")
 
 func move_demo(npc):
 	while true:
@@ -24,9 +24,6 @@ func add_person(pathname, scene):
 		var p = c_person.instance()
 		p.name = pathname
 		add_child(p)
-	
-func camera(pathname):
-	cameraTarget = pathname
 
 func remove_entity(pathname):
 	if get_child(pathname):

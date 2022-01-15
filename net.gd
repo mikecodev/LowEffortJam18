@@ -113,11 +113,8 @@ master func world_ready():
 # RPCs server --> client
 	
 remotesync func load_world():
-	print("1")
 	if is_local or is_network_master(): return
-	print("2")
 	if is_from_server():
-		print("3")
 		emit_signal("StartOnline")
 
 remotesync func instance_person(name: String, pathname, position: Vector2):
