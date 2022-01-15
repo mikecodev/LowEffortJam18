@@ -7,7 +7,13 @@ const TRANSPARENT = Color(0,0,0,0)
 
 func _ready():
 	set_process(false)
-	ShadeIn(2)
+	ShadeOut(2)
+
+func SetBlack():
+	$ColorRect.color = BLACK
+	
+func SetTransparent():
+	$ColorRect.color = TRANSPARENT
 
 func ShadeIn(Duration):
 	Animate(0, Duration)
