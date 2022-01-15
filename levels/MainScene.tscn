@@ -1,7 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://levels/LevelController.gd" type="Script" id=2]
 [ext_resource path="res://sprites/tileset.png" type="Texture" id=4]
+
+[sub_resource type="ConvexPolygonShape2D" id=9]
+points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
+
+[sub_resource type="ConvexPolygonShape2D" id=8]
+points = PoolVector2Array( 0, 0, 64, 0, 64, 32, 0, 32 )
 
 [sub_resource type="TileSet" id=7]
 0/name = "tileset.png 0"
@@ -270,6 +276,48 @@
 18/shape_one_way_margin = 0.0
 18/shapes = [  ]
 18/z_index = 0
+19/name = "tileset.png 19"
+19/texture = ExtResource( 4 )
+19/tex_offset = Vector2( 0, 0 )
+19/modulate = Color( 1, 1, 1, 1 )
+19/region = Rect2( 0, 96, 32, 32 )
+19/tile_mode = 0
+19/occluder_offset = Vector2( 0, 0 )
+19/navigation_offset = Vector2( 0, 0 )
+19/shape_offset = Vector2( 0, 0 )
+19/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+19/shape = SubResource( 9 )
+19/shape_one_way = false
+19/shape_one_way_margin = 1.0
+19/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 9 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+19/z_index = 0
+20/name = "tileset.png 20"
+20/texture = ExtResource( 4 )
+20/tex_offset = Vector2( 0, 0 )
+20/modulate = Color( 1, 1, 1, 1 )
+20/region = Rect2( 0, 128, 64, 32 )
+20/tile_mode = 0
+20/occluder_offset = Vector2( 0, 0 )
+20/navigation_offset = Vector2( 0, 0 )
+20/shape_offset = Vector2( 0, 0 )
+20/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+20/shape = SubResource( 8 )
+20/shape_one_way = false
+20/shape_one_way_margin = 1.0
+20/shapes = [ {
+"autotile_coord": Vector2( 0, 0 ),
+"one_way": false,
+"one_way_margin": 1.0,
+"shape": SubResource( 8 ),
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
+} ]
+20/z_index = 0
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 2 )
@@ -286,4 +334,4 @@ tile_set = SubResource( 7 )
 cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 format = 1
-tile_data = PoolIntArray( 1, 0, 0, 2, 1, 0, 3, 1, 0, 4, 1, 0, 5, 1, 0, 6, 1, 0, 7, 1, 0, 8, 1, 0, 9, 1, 0, 10, 1, 0, 11, 1, 0, 12, 1, 0, 13, 1, 0, 14, 1, 0, 15, 1, 0, 16, 1, 0, 17, 1, 0, 18, 3, 0, 65537, 9, 0, 65554, 4, 0, 131073, 9, 0, 131090, 4, 0, 196609, 9, 0, 196626, 4, 0, 262145, 9, 0, 262162, 4, 0, 327681, 9, 0, 327698, 4, 0, 393217, 9, 0, 393234, 4, 0, 458753, 9, 0, 458770, 4, 0, 524289, 9, 0, 524306, 4, 0, 589825, 9, 0, 589842, 4, 0, 655361, 8, 0, 655362, 6, 0, 655363, 6, 0, 655364, 6, 0, 655365, 7, 0, 655366, 6, 0, 655367, 6, 0, 655368, 6, 0, 655369, 6, 0, 655370, 6, 0, 655371, 6, 0, 655372, 6, 0, 655373, 6, 0, 655374, 6, 0, 655375, 6, 0, 655376, 6, 0, 655377, 6, 0, 655378, 5, 0 )
+tile_data = PoolIntArray( 1, 0, 0, 2, 2, 0, 3, 1, 0, 4, 1, 0, 5, 2, 0, 6, 2, 0, 7, 2, 0, 8, 2, 0, 9, 2, 0, 10, 2, 0, 11, 2, 0, 12, 2, 0, 13, 2, 0, 14, 2, 0, 15, 2, 0, 16, 2, 0, 17, 2, 0, 18, 3, 0, 65537, 9, 0, 65538, 20, 0, 65554, 4, 0, 131073, 9, 0, 131090, 4, 0, 196609, 9, 0, 196623, 19, 0, 196626, 4, 0, 262145, 9, 0, 262162, 4, 0, 327681, 9, 0, 327684, 19, 0, 327698, 4, 0, 393217, 9, 0, 393234, 4, 0, 458753, 9, 0, 458764, 19, 0, 458770, 4, 0, 524289, 9, 0, 524306, 4, 0, 589825, 9, 0, 589842, 4, 0, 655361, 8, 0, 655362, 6, 0, 655363, 6, 0, 655364, 6, 0, 655365, 7, 0, 655366, 6, 0, 655367, 6, 0, 655368, 6, 0, 655369, 6, 0, 655370, 6, 0, 655371, 6, 0, 655372, 6, 0, 655373, 6, 0, 655374, 6, 0, 655375, 6, 0, 655376, 6, 0, 655377, 6, 0, 655378, 5, 0 )
