@@ -1,14 +1,14 @@
 extends Node
 
 signal camera(pathname)
-signal remove_entity(pathname)
-signal add_entity(pathname, scene)
+
+const PLAYER_SPAWN = Vector2(30, 30)
 
 const c_person = preload("res://entities/Movable.tscn")
 var players = {}
+var world: Node2D
 
 func _ready():
-	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_ok")
 	get_tree().connect("connection_failed", self, "_connected_fail")
@@ -21,10 +21,12 @@ func run_as_server():
 
 func run_as_client():
 	var peer = NetworkedMultiplayerENet.new()
-	peer.create_client("127.0.0.1", 29002)
+	peer.create_client("galax.be", 29002)
 	get_tree().network_peer = peer
 
 
+func set_current_level(levelNode):
+	world = levelNode
 # ----------
 # CONNECTION
 
@@ -54,41 +56,30 @@ func _connected_fail():
 
 master func register_player(name):
 	var id = get_id()
-	var pi = c_person.instance()
-	var pathname = "Player"+str(id)
-	players[id] = {
-		name = name,
-		body = pi,
-		pathname = pathname
-	}
-	pi.name = pathname
-	pi.set_name(name)
-	emit_signal("add_entity", pathname, pi)
+	register_person(name, PLAYER_SPAWN, id)
 	rpc_id(id, "load_world")
 	
-func register_person(name, id = 0):
-	var pi = c_person.instance()
-	if id == 0:
-		id = pi.get_instance_id()
-	var pathname = "NPC"+str(id)
-	players[id] = {
-		name = name,
-		body = pi,
-		pathname = pathname
-	}
-	pi.name = pathname
-	pi.set_name(name)
-	emit_signal("add_entity", pathname, pi)
-	rpc_id(id, "load_world")
+func register_person(name, pos = Vector2(5, 5), id = 0):
+	if is_network_master():
+		var pi = c_person.instance()
+		if id == 0:
+			id = pi.get_instance_id()
+		var pathname = "NPC"+str(id)
+		players[id] = {
+			name = name,
+			body = pi,
+			pathname = pathname
+		}
+		pi.name = pathname
+		pi.global_position = pos
+		world.add_child(pi)
+		broadcast_world()
+		return pi.get_path()
 	
-master func world_ready():
-	var id = get_id()
-	var p = players[id]
-	rpc("instance_person", p.name, p.pathname)
+func broadcast_world():
 	for pid in players:
-		if pid != id:
-			rpc_id(id, "instance_person", players[pid].name, players[pid].pathname)
-	rpc_id(id, "camera_target", "/root/World/"+p.pathname)
+		var p = players[pid]
+		rpc("instance_person", p.name, p.pathname, p.body.global_position)
 	
 master func move_player(input_v: Vector2):
 	players[get_id()].body.move(input_v)
@@ -96,21 +87,24 @@ master func move_player(input_v: Vector2):
 master func skill_input(num: int, direction: Vector2):
 	players[get_id()].body.skill(num, direction)
 	
+master func world_ready():
+	broadcast_world()
+	var id = get_id()
+	rpc_id(id, "camera_target", players[id].pathname)
 	
 # ----
 # RPCs server --> client
 	
 puppet func load_world():
 	if is_from_server():
-		get_tree().change_scene("res://client/screens/World.tscn")
-		rpc("world_ready")
+		get_tree().change_scene("res://levels/MainScene.tscn")
 
 puppet func instance_person(name: String, pathname, position: Vector2):
-	if is_from_server():
+	if is_from_server() and world:
 		var pi = c_person.instance()
 		pi.name = pathname
 		pi.global_position = position
-		emit_signal("add_entity", pathname, pi)
+		world.add_child(pi)
 		
 puppet func camera_target(pathname: String):
 	if is_from_server():
@@ -118,7 +112,8 @@ puppet func camera_target(pathname: String):
 		
 remotesync func remove_entity(pathname: String):
 	if is_from_server():
-		emit_signal("remove_entity", pathname)
+		if world.get_node(pathname):
+			world.remove_child(world.get_node(pathname))
 	
 # -----
 # UTILS

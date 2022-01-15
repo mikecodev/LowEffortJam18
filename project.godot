@@ -11,12 +11,13 @@ config_version=4
 [application]
 
 config/name="LowEffortJam18"
-run/main_scene="res://levels/MainScene.tscn"
+run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
 
 Net="*res://net.gd"
+ClientManager="*res://autoloads/ClientManager.gd"
 
 [display]
 
