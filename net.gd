@@ -2,6 +2,9 @@ extends Node
 
 signal camera(pathname)
 
+signal StartLocal()
+signal StartOnline()
+
 const PLAYER_SPAWN = Vector2(70, 70)
 
 const c_person = preload("res://entities/Movable.tscn")
@@ -66,8 +69,9 @@ master func register_player(name):
 		var w = c_world.instance()
 		add_child(w)
 		world = w
-		var m = get_node("/root/Menu")
-		m.get_parent().remove_child(m)
+		emit_signal("StartLocal", w)
+		# var m = get_node("/root/Menu")
+		# m.get_parent().remove_child(m)
 	var id = get_id()
 	register_person(name, PLAYER_SPAWN, id)
 	rpc_id(id, "load_world")
@@ -110,7 +114,7 @@ master func world_ready():
 remotesync func load_world():
 	if is_local or is_network_master(): return
 	if is_from_server():
-		get_tree().change_scene("res://levels/MainScene.tscn")
+		emit_signal("StartOnline")
 
 remotesync func instance_person(name: String, pathname, position: Vector2):
 	if is_local or is_network_master(): return
