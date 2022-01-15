@@ -4,6 +4,8 @@ export var speed = 200
 export var friction = 0.01
 export var acceleration = 0.1
 
+onready var allow_animation_change_timer = Timer.new()
+var allow_animation_change = true
 var animation = "_"
 var freezed = false
 var velocity: Vector2 = Vector2.ZERO
@@ -11,10 +13,17 @@ var v_buffer: Vector2 = Vector2.ZERO
 
 func _ready():
 	if is_network_master():
+		allow_animation_change_timer.wait_time = .2
+		allow_animation_change_timer.one_shot = true
+		allow_animation_change_timer.connect("timeout", self, "reset_allow_animation_change")
+		add_child(allow_animation_change_timer)
 		update_play("idledown")
 	else:
 		set_process(false)
 		set_physics_process(false)
+
+func reset_allow_animation_change():
+	allow_animation_change = true
 
 func set_name(name):
 	$Floating.set_text(name)
@@ -64,7 +73,9 @@ func freeze(time: float):
 		freezed = false
 
 func update_play(anim):
-	if animation != anim:
+	if animation != anim && allow_animation_change:
+		allow_animation_change = false
+		allow_animation_change_timer.start()
 		animation = anim
 		rpc("play", anim)
 		
