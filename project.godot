@@ -19,6 +19,10 @@ config/icon="res://icon.png"
 Net="*res://net.gd"
 ClientManager="*res://autoloads/ClientManager.gd"
 
+[debug]
+
+gdscript/warnings/return_value_discarded=false
+
 [display]
 
 window/size/width=320
