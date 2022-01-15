@@ -14,7 +14,7 @@ func _ready():
 
 func move_demo(npc):
 	while true:
-		npc.move_to(Vector2(200, 200))
+		npc.move_to(Vector2(100, 100))
 		yield(get_tree().create_timer(5), "timeout")
 		npc.move_to(Vector2(10, 10))
 		yield(get_tree().create_timer(5), "timeout")
