@@ -122,7 +122,7 @@ remotesync func instance_person(name: String, pathname, position: Vector2):
 		
 remotesync func remove_entity(pathname: String):
 	if is_from_server():
-		if world.get_node(pathname):
+		if world and world.get_node(pathname):
 			world.remove_child(world.get_node(pathname))
 	
 # -----
