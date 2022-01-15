@@ -1,66 +1,70 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://assets/fonts/Pixeboy-z8XGD.tres" type="DynamicFont" id=1]
 [ext_resource path="res://entities/GUI/HUD.gd" type="Script" id=2]
+[ext_resource path="res://sprites/gui-box-01.png" type="Texture" id=3]
 
-[sub_resource type="Theme" id=1]
-default_font = ExtResource( 1 )
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 152, 14 )
 
-[node name="MarginContainer" type="MarginContainer"]
-margin_right = 320.0
-margin_bottom = 14.0
-size_flags_horizontal = 3
-theme = SubResource( 1 )
-custom_constants/margin_right = 20
-custom_constants/margin_top = 2
-custom_constants/margin_left = 10
-custom_constants/margin_bottom = 2
+[node name="HUD" type="PanelContainer"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -158.0
+margin_top = 5.0
+margin_right = -10.0
+margin_bottom = 15.0
+custom_styles/panel = SubResource( 1 )
 script = ExtResource( 2 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_left = 10.0
-margin_top = 2.0
-margin_right = 300.0
-margin_bottom = 12.0
-size_flags_horizontal = 3
-
-[node name="Control" type="Control" parent="HBoxContainer"]
-margin_right = 150.0
+[node name="CenterContainer" type="CenterContainer" parent="."]
+margin_right = 148.0
 margin_bottom = 10.0
 size_flags_horizontal = 3
 
-[node name="PointsLabel" type="Label" parent="HBoxContainer"]
-margin_left = 154.0
+[node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
+margin_left = 23.0
 margin_top = 1.0
-margin_right = 192.0
+margin_right = 125.0
 margin_bottom = 9.0
+size_flags_horizontal = 3
+
+[node name="PointsLabel" type="Label" parent="CenterContainer/HBoxContainer"]
+margin_right = 38.0
+margin_bottom = 8.0
+custom_colors/font_color = Color( 0.427451, 0.313726, 0.152941, 1 )
+custom_fonts/font = ExtResource( 1 )
 text = "Points:"
 
-[node name="PointsValue" type="Label" parent="HBoxContainer"]
-margin_left = 196.0
-margin_top = 1.0
-margin_right = 222.0
-margin_bottom = 9.0
-text = "20 <3"
+[node name="PointsValue" type="Label" parent="CenterContainer/HBoxContainer"]
+margin_left = 42.0
+margin_right = 48.0
+margin_bottom = 8.0
+custom_colors/font_color = Color( 0.427451, 0.313726, 0.152941, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "0"
 
-[node name="VSeparator" type="VSeparator" parent="HBoxContainer"]
-margin_left = 226.0
-margin_right = 230.0
-margin_bottom = 10.0
+[node name="VSeparator" type="VSeparator" parent="CenterContainer/HBoxContainer"]
+margin_left = 52.0
+margin_right = 56.0
+margin_bottom = 8.0
 
-[node name="LifeLabel" type="Label" parent="HBoxContainer"]
-margin_left = 234.0
-margin_top = 1.0
-margin_right = 260.0
-margin_bottom = 9.0
+[node name="LifeLabel" type="Label" parent="CenterContainer/HBoxContainer"]
+margin_left = 60.0
+margin_right = 86.0
+margin_bottom = 8.0
+custom_colors/font_color = Color( 0.427451, 0.313726, 0.152941, 1 )
+custom_fonts/font = ExtResource( 1 )
 text = "Life:"
 
-[node name="LifeValue" type="Label" parent="HBoxContainer"]
-margin_left = 264.0
-margin_top = 1.0
-margin_right = 290.0
-margin_bottom = 9.0
-text = "20 <3"
+[node name="LifeValue" type="Label" parent="CenterContainer/HBoxContainer"]
+margin_left = 90.0
+margin_right = 102.0
+margin_bottom = 8.0
+custom_colors/font_color = Color( 0.427451, 0.313726, 0.152941, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "20"
