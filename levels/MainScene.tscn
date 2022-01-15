@@ -442,8 +442,6 @@ navpoly = SubResource( 19 )
 [node name="HUD" parent="CanvasLayer" instance=ExtResource( 1 )]
 
 [node name="DebugPath" type="Line2D" parent="."]
+visible = false
 points = PoolVector2Array( 130, 165 )
 width = 1.0
-
-[node name="Position2D" type="Position2D" parent="."]
-position = Vector2( 282, 62 )
