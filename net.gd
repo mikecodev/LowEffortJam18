@@ -2,7 +2,7 @@ extends Node
 
 signal camera(pathname)
 
-const PLAYER_SPAWN = Vector2(30, 30)
+const PLAYER_SPAWN = Vector2(70, 70)
 
 const c_person = preload("res://entities/Movable.tscn")
 const c_world = preload("res://levels/MainScene.tscn")
@@ -108,12 +108,12 @@ master func world_ready():
 # RPCs server --> client
 	
 remotesync func load_world():
-	if is_network_master() and is_local: return
+	if is_local or is_network_master(): return
 	if is_from_server():
 		get_tree().change_scene("res://levels/MainScene.tscn")
 
 remotesync func instance_person(name: String, pathname, position: Vector2):
-	if is_network_master() and is_local: return
+	if is_local or is_network_master(): return
 	if is_from_server() and world:
 		var pi = c_person.instance()
 		pi.name = pathname
