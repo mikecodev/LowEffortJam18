@@ -8,7 +8,16 @@ func _ready():
 	Net.connect("camera", self, "camera")
 	Net.set_current_level(self)
 	Net.rpc("world_ready")
-	print("Path: ", Net.register_person("Rido"))
+	if is_network_master():
+		var p = Net.register_person("Rido")
+		get_node(p).move_to(Vector2(200, 200))
+
+func move_demo(npc):
+	while true:
+		npc.move_to(Vector2(200, 200))
+		yield(get_tree().create_timer(5), "timeout")
+		npc.move_to(Vector2(10, 10))
+		yield(get_tree().create_timer(5), "timeout")
 
 func add_person(pathname, scene):
 	if not get_node(pathname):
