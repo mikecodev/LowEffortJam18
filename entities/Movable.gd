@@ -40,6 +40,10 @@ func set_name(name):
 func _physics_process(delta):
 	if path and path.size() > 0:
 		move_along_path()
+	elif collision_mask == 0:
+		collision_mask = 1
+	
+	print("v_buffer ", v_buffer)
 	
 	velocity = Vector2.ZERO
 	if v_buffer.length() > 0:
@@ -75,6 +79,7 @@ func move(direction):
 		v_buffer = direction * speed
 	
 func move_to(target_position: Vector2):
+	collision_mask = 0
 	path = navigation.get_simple_path(global_position, target_position)
 	
 func move_along_path():
