@@ -13,6 +13,12 @@ func _ready():
 	$Transition.SetBlack()
 	$Transition.ShadeOut(4)
 
+func OnStartServer():
+	get_node(CurrentScene).queue_free()
+	var World = WORLD_SCENE.instance()
+	add_child(World)
+	CurrentScene = World.get_path()
+
 func OnStartOnline():
 	$Transition.ShadeIn(2)
 	yield($Transition, "AnimationFinished")

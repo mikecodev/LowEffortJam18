@@ -121,10 +121,11 @@ remotesync func load_world():
 remotesync func instance_person(name: String, pathname, position: Vector2):
 	if is_local or is_network_master(): return
 	if is_from_server() and world:
-		var pi = c_person.instance()
-		pi.name = pathname
-		pi.global_position = position
-		world.add_child(pi)
+		if not world.get_node(pathname):
+			var pi = c_person.instance()
+			pi.name = pathname
+			pi.global_position = position
+			world.add_child(pi)
 		
 remotesync func remove_entity(pathname: String):
 	if is_from_server():
