@@ -46,7 +46,7 @@ func _ready():
 	Movable.play_bubble(Bubble.STATUS.upset)
 	var random = RandomNumberGenerator.new()
 	random.randomize()
-	Movable.SetType(random.randi_range(1, 3))
+	Movable.rpc("SetType", random.randi_range(1, 3))
 
 func AskForQueueSpace():
 	var QueueEntered = ClientManager.EnterQueue(self)
