@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://entities/GUI/HUD.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels/LevelController.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://sprites/tileset.png" type="Texture" id=4]
 [ext_resource path="res://entities/Cook.tscn" type="PackedScene" id=6]
 [ext_resource path="res://shaders/outline.gdshader" type="Shader" id=7]
+[ext_resource path="res://sprites/waiter.png" type="Texture" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=10]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -646,9 +647,11 @@ shader_param/line_color = Color( 1, 1, 1, 0.517647 )
 shader_param/line_thickness = 1.0
 
 [sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 8 )
 region = Rect2( 0, 0, 16, 18 )
 
 [sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 8 )
 region = Rect2( 16, 0, 16, 18 )
 
 [sub_resource type="SpriteFrames" id=43]
@@ -717,7 +720,7 @@ z_index = 12
 [node name="Waiter" type="AnimatedSprite" parent="."]
 material = SubResource( 44 )
 position = Vector2( 291, 61 )
-z_index = 12
+z_index = 20
 frames = SubResource( 43 )
 playing = true
 

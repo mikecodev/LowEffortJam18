@@ -37,7 +37,6 @@ position = Vector2( 0, 19 )
 shape = SubResource( 4 )
 
 [node name="Timer" type="Timer" parent="."]
-autostart = true
 
 [connection signal="area_exited" from="Area2D" to="." method="next_pizza"]
 [connection signal="timeout" from="Timer" to="." method="check_orders"]
