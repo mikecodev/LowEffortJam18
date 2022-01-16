@@ -52,6 +52,7 @@ func AskForQueueSpace():
 	var QueueEntered = ClientManager.EnterQueue(self)
 	if QueueEntered:
 		State = STATE.WalkingToQueue
+		print("moving to queue space")
 		Movable.move_to(Destination)
 	else:
 		# TODO: Do we want pissed off clients that just enter the venue?
@@ -72,13 +73,15 @@ func LeaveAndTip():
 		printerr("Client Error: LeaveAndTip received but state wasn't finished eating. State = ", State)
 func Leave():
 	State = STATE.Leaving
+	print("moving to exit")
 	Movable.move_to(Defs.EXIT_POS)
 func ExitStore():
 	# TODO: Open the door, leave the store and QueueFree
-	queue_free()
+	Net.rpc("remove_entity", get_path())
 func OnFreeTable(Destination : Vector2):
 	if State == STATE.Queuing:
 		State = STATE.WalkingToTable
+		print("moving to table")
 		Movable.move_to(Destination)
 		return true
 	else:
@@ -108,4 +111,5 @@ func MyPatienceIsGrowingSmaller():
 	# TODO: Add the pissed off probability here (among other places). It has to be very small!
 	if Satisfaction == 0:
 		Leave()
+	$PatienceTimer.stop()
 	# TODO: Also add an object and call it here to update the patience visual effect
