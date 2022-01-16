@@ -1,6 +1,15 @@
 extends KinematicBody2D
 
+class_name Movable
+
 signal path_done
+
+enum TYPE {
+	Player,
+	Npc01,
+	Npc02,
+	Npc03
+}
 
 export var speed = 200
 export var friction = 0.01
@@ -16,6 +25,7 @@ var freezed = false
 var velocity: Vector2 = Vector2.ZERO
 var v_buffer: Vector2 = Vector2.ZERO
 var path: PoolVector2Array
+onready var animated_sprite: AnimatedSprite = $asPlayer
 
 func _ready():
 	if is_network_master():
@@ -114,7 +124,7 @@ func update_play(anim):
 		
 remotesync func play(anim):
 	if Net.is_from_server():
-		$AnimatedSprite.play(anim)
+		animated_sprite.play(anim)
 
 puppet func puppet_move(origin):
 	print("muving 1")
@@ -135,3 +145,15 @@ func skill(num: int, pos: Vector2):
 			freeze(1)
 			update_play("walk")
 			Net.rpc("take_pizza")
+			
+func SetType(type):
+	match type:
+		TYPE.Player:
+			animated_sprite = $asPlayer
+		TYPE.Npc01:
+			animated_sprite = $asNpc01
+		TYPE.Npc02:
+			animated_sprite = $asNpc02
+		TYPE.Npc03:
+			animated_sprite = $asNpc03
+	animated_sprite.visible = true

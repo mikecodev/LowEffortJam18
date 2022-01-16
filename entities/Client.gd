@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Client
+
 signal LeaveTip(Money)
 
 enum STATE {
@@ -13,6 +15,8 @@ enum STATE {
 	PissedOff,
 	Leaving
 }
+
+
 
 export(float, 0, 1) var Patience : float
 export(int, 0, 100) var Satisfaction : int
@@ -40,6 +44,9 @@ func _ready():
 	ClientManager = get_node("/root/ClientManager")
 	Movable.move_to(Defs.ENTRY_POS)
 	Movable.play_bubble(Bubble.STATUS.upset)
+	var random = RandomNumberGenerator.new()
+	random.randomize()
+	Movable.SetType(random.randi_range(1, 3))
 
 func AskForQueueSpace():
 	var QueueEntered = ClientManager.EnterQueue(self)
@@ -102,6 +109,3 @@ func MyPatienceIsGrowingSmaller():
 	if Satisfaction == 0:
 		Leave()
 	# TODO: Also add an object and call it here to update the patience visual effect
-
-func GetStatusBubble():
-	pass

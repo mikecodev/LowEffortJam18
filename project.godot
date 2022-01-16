@@ -13,9 +13,21 @@ _global_script_classes=[ {
 "class": "Bubble",
 "language": "GDScript",
 "path": "res://scripts/Bubble.gd"
+}, {
+"base": "Node2D",
+"class": "Client",
+"language": "GDScript",
+"path": "res://entities/Client.gd"
+}, {
+"base": "KinematicBody2D",
+"class": "Movable",
+"language": "GDScript",
+"path": "res://entities/Movable.gd"
 } ]
 _global_script_class_icons={
-"Bubble": ""
+"Bubble": "",
+"Client": "",
+"Movable": ""
 }
 
 [application]
