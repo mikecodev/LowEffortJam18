@@ -41,24 +41,24 @@ func _ready():
 	Movable.move_to(Defs.ENTRY_POS)
 	Movable.play_bubble(Bubble.STATUS.upset)
 
-func AskForQueueSpace():	
+func AskForQueueSpace():
 	var QueueEntered = ClientManager.EnterQueue(self)
 	if QueueEntered:
-		STATE.WalkingToQueue
+		State = STATE.WalkingToQueue
 		Movable.move_to(Destination)
 	else:
 		# TODO: Do we want pissed off clients that just enter the venue?
 		Leave()
 func WaitForATable():
-	State = State.Queuing
+	State = STATE.Queuing
 	$PatienceTimer.start()
 	ClientManager.ArrivedToQueueDestination()
 func WaitForFood():
-	State = State.WaitingForFood
+	State = STATE.WaitingForFood
 	# TODO: Either choose a random food now or this should be done outside this class or in the ready
 	# TODO: ShowPizzaSign() Should show a bubble with the desired pizza
 func LeaveAndTip():
-	if State == State.FinishedEating:
+	if State == STATE.FinishedEating:
 		emit_signal("LeaveTip", Tip)
 		Leave()
 	else:
@@ -70,8 +70,8 @@ func ExitStore():
 	# TODO: Open the door, leave the store and QueueFree
 	queue_free()
 func OnFreeTable(Destination : Vector2):
-	if State == State.Queuing:
-		State = State.WalkingToTable
+	if State == STATE.Queuing:
+		State = STATE.WalkingToTable
 		Movable.move_to(Destination)
 		return true
 	else:
@@ -90,8 +90,8 @@ func OnPositionArrival():
 		_:
 			printerr("Client Error: Unexpected OnPositionArrival received when state is ", State)
 func DeliverFood(PizzaTopping, PizzaSize):
-	if State == State.WaitingForFood:
-		State = State.FinishedEating
+	if State == STATE.WaitingForFood:
+		State = STATE.FinishedEating
 		Tip = (((PizzaTopping == TargetPizzaTopping) + (TargetPizzaSize == TargetPizzaSize))*0.5)*Satisfaction
 		# TODO: Penalty? Also when the customers decides to leave (check the timer)
 	else:
