@@ -12,7 +12,6 @@ func add_pizza(order):
 
 func check_orders():
 	var areas = $Area2D.get_overlapping_areas()
-	print(areas)
 	if Defs.orders.size() > 0 and areas.size() == 0:
 		var order = Defs.orders.pop_front()
 		add_pizza(order)
