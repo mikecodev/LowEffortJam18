@@ -148,8 +148,6 @@ func skill(num: int, pos: Vector2):
 			
 func SetType(type):
 	match type:
-		TYPE.Player:
-			animated_sprite = $asPlayer
 		TYPE.Npc01:
 			animated_sprite = $asNpc01
 		TYPE.Npc02:
@@ -157,3 +155,4 @@ func SetType(type):
 		TYPE.Npc03:
 			animated_sprite = $asNpc03
 	animated_sprite.visible = true
+	$asPlayer.visible = false
