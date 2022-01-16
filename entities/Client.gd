@@ -37,16 +37,15 @@ var Tip = 0.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_process(false)
-	var MovablePath = Net.register_person("NPC", Defs.SPAWN_POS)
+	var random = RandomNumberGenerator.new()
+	random.randomize()
+	var MovablePath = Net.register_person("NPC", Defs.SPAWN_POS, random.randi_range(1, 3))
 	Movable = get_node(MovablePath)
 	Movable.connect("path_done", self, "OnPositionArrival")
 	$PatienceTimer.connect("timeout", self, "MyPatienceIsGrowingSmaller")
 	ClientManager = get_node("/root/ClientManager")
 	Movable.move_to(Defs.ENTRY_POS)
 	Movable.play_bubble(Bubble.STATUS.upset)
-	var random = RandomNumberGenerator.new()
-	random.randomize()
-	Movable.rpc("SetType", random.randi_range(1, 3))
 
 func AskForQueueSpace():
 	var QueueEntered = ClientManager.EnterQueue(self)
