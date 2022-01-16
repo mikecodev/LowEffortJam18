@@ -16,7 +16,6 @@ func _ready():
 	$Transition.ShadeOut(4)
 
 func OnStartServer():
-	var WORLD_SCENE = preload("res://levels/MainScene.tscn")
 	var World = WORLD_SCENE.instance()
 	add_child(World)
 	CurrentScene = World.get_path()

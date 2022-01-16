@@ -77,11 +77,11 @@ func Leave():
 func ExitStore():
 	# TODO: Open the door, leave the store and QueueFree
 	Net.rpc("remove_entity", get_path())
-func OnFreeTable(Destination : Vector2):
+func OnFreeTable(_Destination : Vector2):
 	if State == STATE.Queuing:
 		State = STATE.WalkingToTable
 		print("moving to table")
-		Movable.move_to(Destination)
+		Movable.move_to(_Destination)
 		return true
 	else:
 		printerr("Client Error: OnFreeTable received when the State wasn't queuing. State = ", State)
@@ -101,7 +101,7 @@ func OnPositionArrival():
 func DeliverFood(PizzaTopping, PizzaSize):
 	if State == STATE.WaitingForFood:
 		State = STATE.FinishedEating
-		Tip = (((PizzaTopping == TargetPizzaTopping) + (TargetPizzaSize == TargetPizzaSize))*0.5)*Satisfaction
+		Tip = (((PizzaTopping == TargetPizzaTopping) + (PizzaSize == TargetPizzaSize))*0.5)*Satisfaction
 		# TODO: Penalty? Also when the customers decides to leave (check the timer)
 	else:
 		printerr("Client Error: DeliverFood received but the client wasn't waiting for food. The State was: ", State)

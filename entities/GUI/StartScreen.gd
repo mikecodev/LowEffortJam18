@@ -23,3 +23,4 @@ func _on_Local_button_up():
 	Net.rpc("register_player", "Player")
 func _on_Nickname_text_changed(new_text):
 	Nickname.modulate = Color.white
+	Nickname.text = new_text
