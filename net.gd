@@ -1,7 +1,5 @@
 extends Node
 
-signal camera(pathname)
-
 signal StartLocal()
 signal StartOnline()
 signal Connected()
@@ -103,7 +101,7 @@ func register_person(name, pos = Vector2(5, 5), skin = 0, id = 0):
 func broadcast_world():
 	for pid in players:
 		var p = players[pid]
-		rpc("instance_person", p.name, p.pathname, p.body.global_position, p.skin)
+		rpc("instance_person", p.pathname, p.body.global_position, p.skin)
 	
 master func move_player(input_v: Vector2):
 	players[get_id()].body.move(input_v)
@@ -113,7 +111,6 @@ master func skill_input(num: int, direction: Vector2):
 	
 master func world_ready():
 	broadcast_world()
-	var id = get_id()
 	
 # ----
 # RPCs server --> client
@@ -123,7 +120,7 @@ remotesync func load_world():
 	if is_from_server():
 		emit_signal("StartOnline")
 
-remotesync func instance_person(name: String, pathname, position: Vector2, skin):
+remotesync func instance_person(pathname, position: Vector2, skin):
 	if is_local or is_network_master(): return
 	if is_from_server() and world:
 		if not world.get_node(pathname):
@@ -138,6 +135,9 @@ remotesync func remove_entity(pathname: String):
 		var node = get_node(pathname)
 		if world and node:
 			node.queue_free()
+			var Movable = node.GetMovable()
+			players.erase(Movable.get_instance_id())
+			Movable.queue_free()
 	
 # -----
 # UTILS

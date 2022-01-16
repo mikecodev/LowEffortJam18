@@ -14,7 +14,7 @@ func Start():
 		ClientManager.Start()
 	$CanvasLayer/HUD.visible = true
 
-func add_person(pathname, scene):
+func add_person(pathname):
 	if not get_node(pathname):
 		var p = c_person.instance()
 		p.name = pathname

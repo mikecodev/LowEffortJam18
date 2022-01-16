@@ -98,7 +98,7 @@ func move_along_path():
 	var start_point := global_position
 	if debugpath:
 		debugpath.points = path
-	for i in range(path.size()):
+	for _i in range(path.size()):
 		var x = path[0][0]
 		var y = path[0][1]
 		var px = int(x) - (int(x) % 16) + 8
@@ -140,7 +140,7 @@ func delete_children(node):
 		n.queue_free()
 		
 # SKILLS
-func skill(num: int, pos: Vector2):
+func skill(num: int, _pos: Vector2):
 	if freezed: return
 	match num:
 		1:

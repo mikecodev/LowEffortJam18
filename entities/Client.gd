@@ -3,6 +3,7 @@ extends Node2D
 class_name Client
 
 signal LeaveTip(Money)
+signal ImLeaving(Player)
 
 enum STATE {
 	Entering,
@@ -74,6 +75,7 @@ func Leave():
 	State = STATE.Leaving
 	print("moving to exit")
 	Movable.move_to(Defs.EXIT_POS)
+	emit_signal("ImLeaving", self)
 func ExitStore():
 	# TODO: Open the door, leave the store and QueueFree
 	Net.rpc("remove_entity", get_path())
@@ -96,8 +98,16 @@ func OnPositionArrival():
 			WaitForFood()
 		STATE.Leaving:
 			ExitStore()
+		STATE.Queuing:
+			# Sometimes if somebody leaves the queue we move a step forward. Do nothing
+			pass
 		_:
 			printerr("Client Error: Unexpected OnPositionArrival received when state is ", State)
+
+func AdvancePositionInQueue():
+	print("Move to Destination ", Destination)
+	Movable.move_to(Destination)
+	
 func DeliverFood(PizzaTopping, PizzaSize):
 	if State == STATE.WaitingForFood:
 		State = STATE.FinishedEating
@@ -106,9 +116,12 @@ func DeliverFood(PizzaTopping, PizzaSize):
 	else:
 		printerr("Client Error: DeliverFood received but the client wasn't waiting for food. The State was: ", State)
 func MyPatienceIsGrowingSmaller():
-	Satisfaction = clamp(Satisfaction - Patience, 0, 100)
+	Satisfaction = int(clamp(Satisfaction - Patience, 0, 100))
 	# TODO: Add the pissed off probability here (among other places). It has to be very small!
 	if Satisfaction == 0:
 		Leave()
 	$PatienceTimer.stop()
 	# TODO: Also add an object and call it here to update the patience visual effect
+
+func GetMovable():
+	return Movable

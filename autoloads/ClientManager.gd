@@ -30,6 +30,7 @@ func EnterQueue(Client) -> bool:
 		QueuedClients.push_back(Client)
 		# El jodido vector2 no se pasa por referencia
 		Client.Destination = Vector2(Defs.QUEUE_HEAD_POS.x, Defs.QUEUE_HEAD_POS.y + (QueuedClients.size()-1)*SPRITE_HEIGHT)
+		Client.connect("ImLeaving", self, "OnPlayerLeaving")
 		return true
 	return false
 func ArrivedToQueueDestination():
@@ -50,3 +51,12 @@ func OnClientSpawn():
 func Start():
 	if is_network_master():
 		SpawnTimer.start()
+func OnPlayerLeaving(Client):
+	var Idx = QueuedClients.find(Client)
+	if Idx != -1:
+		for i in range(Idx+1, QueuedClients.size()):
+			QueuedClients[i].Destination = Vector2(Defs.QUEUE_HEAD_POS.x, Defs.QUEUE_HEAD_POS.y + i*SPRITE_HEIGHT)
+			QueuedClients[i].AdvancePositionInQueue()
+		print(QueuedClients)
+		QueuedClients.erase(QueuedClients[Idx])
+		print(QueuedClients)
