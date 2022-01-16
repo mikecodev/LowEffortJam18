@@ -5,6 +5,12 @@
 [node name="Client" type="Node2D"]
 z_index = 12
 script = ExtResource( 1 )
+Patience = 1.0
+Satisfaction = 100
 
 [node name="PatienceTimer" type="Timer" parent="."]
-wait_time = 20.0
+wait_time = 0.2
+
+[node name="ResetBubble" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true

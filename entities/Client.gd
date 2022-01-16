@@ -17,8 +17,6 @@ enum STATE {
 	Leaving
 }
 
-
-
 export(float, 0, 1) var Patience : float
 export(int, 0, 100) var Satisfaction : int
 
@@ -32,7 +30,8 @@ var ClientManager
 # tmp
 var Destination
 var LookAtDir = Movable.LOOK.down
-
+var CurrentBubble = Bubble.STATUS.empty
+var SatisfactionWarning = 0
 # Output
 var Tip = 0.0
 
@@ -43,9 +42,11 @@ func _ready():
 	MovableObj = get_node(MovablePath)
 	MovableObj.connect("path_done", self, "OnPositionArrival")
 	$PatienceTimer.connect("timeout", self, "MyPatienceIsGrowingSmaller")
+	$ResetBubble.connect("timeout", self, "OnResetBubble")
+	
 	ClientManager = get_node("/root/ClientManager")
 	MovableObj.move_to(Defs.ENTRY_POS)
-	MovableObj.play_bubble(Bubble.STATUS.upset)
+	MovableObj.play_bubble(Bubble.STATUS.empty)
 
 func AskForQueueSpace():
 	var QueueEntered = ClientManager.EnterQueue(self)
@@ -116,11 +117,18 @@ func DeliverFood(PizzaTopping, PizzaSize):
 		printerr("Client Error: DeliverFood received but the client wasn't waiting for food. The State was: ", State)
 func MyPatienceIsGrowingSmaller():
 	Satisfaction = int(clamp(Satisfaction - Patience, 0, 100))
+	if Satisfaction < 50 and SatisfactionWarning == 0 or Satisfaction < 25 and SatisfactionWarning == 1:
+		SatisfactionWarning = SatisfactionWarning + 1
+		MovableObj.play_bubble(Bubble.STATUS.upset)
+		$ResetBubble.start()
 	# TODO: Add the pissed off probability here (among other places). It has to be very small!
 	if Satisfaction == 0:
 		Leave()
-	$PatienceTimer.stop()
+		MovableObj.play_bubble(Bubble.STATUS.upset)
+		$PatienceTimer.stop()
 	# TODO: Also add an object and call it here to update the patience visual effect
+func OnResetBubble():
+	MovableObj.play_bubble(CurrentBubble)
 
 func GetMovable():
 	return MovableObj
