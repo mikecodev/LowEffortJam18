@@ -59,15 +59,16 @@ remotesync func take_put():
 			remove_child(pizza_carried)
 			get_parent().add_child(pizza_carried)
 			pizza_carried.area_enabled(true)
+			var g = global_position
 			match looking_at:
 				LOOK.left:
-					pizza_carried.global_position = global_position + Vector2(-20, 0)
+					pizza_carried.global_position = Vector2(g.x-20, g.y)
 				LOOK.right:
-					pizza_carried.global_position = global_position + Vector2(+20, 0)
+					pizza_carried.global_position = Vector2(g.x+20, g.y)
 				LOOK.up:
-					pizza_carried.global_position = global_position + Vector2(0, -20)
+					pizza_carried.global_position = Vector2(g.x, g.y-20)
 				LOOK.down:
-					pizza_carried.global_position = global_position + Vector2(0, +20)
+					pizza_carried.global_position =Vector2(g.x, g.y+20)
 			pizza_carried = null
 		else:
 			var pizzas = $ActionArea.get_overlapping_areas()

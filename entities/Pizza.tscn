@@ -240,9 +240,3 @@ frames = SubResource( 37 )
 [node name="Beer" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 42 )
-
-[node name="Timer" type="Timer" parent="."]
-wait_time = 10.0
-autostart = true
-
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
