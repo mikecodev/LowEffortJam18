@@ -5,6 +5,8 @@ onready var WORLD_SCENE = preload("res://levels/MainScene.tscn")
 var CurrentScene
 
 func _ready():
+	if is_network_master() and not Net.is_local:
+		return
 	Net.connect("StartOnline", self, "OnStartOnline")
 	Net.connect("StartLocal", self, "OnStartLocal")
 	var StartScreen = START_SCREEN_SCENE.instance()
@@ -14,10 +16,9 @@ func _ready():
 	$Transition.ShadeOut(4)
 
 func OnStartServer():
-	get_node(CurrentScene).queue_free()
+	var WORLD_SCENE = preload("res://levels/MainScene.tscn")
 	var World = WORLD_SCENE.instance()
 	add_child(World)
-	Net.run_as_server()
 	CurrentScene = World.get_path()
 
 func OnStartOnline():
