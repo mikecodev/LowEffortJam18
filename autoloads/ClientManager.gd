@@ -33,7 +33,7 @@ func EnterQueue(Client) -> bool:
 		return true
 	return false
 func ArrivedToQueueDestination():
-	while(FreeTables.size() > 0 and QueuedClients.size() > 0 and QueuedClients[0].Queuing):
+	while(FreeTables.size() > 0 and QueuedClients.size() > 0 and QueuedClients[0].State == Client.STATE.Queuing):
 		var Table = FreeTables.pop_front()
 		# TODO: So far we have no groups, so we are just sitting random people together. This should change to customers arriving together
 		var NumClients = rand_range(1, min(Table.Seats.size(), QueuedClients.size()))
