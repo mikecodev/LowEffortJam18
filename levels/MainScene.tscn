@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://entities/GUI/HUD.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels/LevelController.gd" type="Script" id=2]
@@ -6,6 +6,8 @@
 [ext_resource path="res://sprites/tileset.png" type="Texture" id=4]
 [ext_resource path="res://entities/Pizza.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sprites/cook.png" type="Texture" id=6]
+[ext_resource path="res://shaders/outline.gdshader" type="Shader" id=7]
+[ext_resource path="res://sprites/waiter.png" type="Texture" id=8]
 
 [sub_resource type="ConvexPolygonShape2D" id=10]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -611,6 +613,34 @@ points = PoolVector2Array( 0, 0, 3.72151, 0.0476112, 3.72151, 16, 0, 16 )
 2/shape_one_way_margin = 0.0
 2/shapes = [  ]
 2/z_index = 0
+3/name = "tileset.png 3"
+3/texture = ExtResource( 4 )
+3/tex_offset = Vector2( 0, 0 )
+3/modulate = Color( 1, 1, 1, 1 )
+3/region = Rect2( 0, 160, 16, 16 )
+3/tile_mode = 0
+3/occluder_offset = Vector2( 0, 0 )
+3/navigation_offset = Vector2( 0, 0 )
+3/shape_offset = Vector2( 0, 0 )
+3/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+3/shape_one_way = false
+3/shape_one_way_margin = 0.0
+3/shapes = [  ]
+3/z_index = 0
+4/name = "tileset.png 4"
+4/texture = ExtResource( 4 )
+4/tex_offset = Vector2( 0, 0 )
+4/modulate = Color( 1, 1, 1, 1 )
+4/region = Rect2( 16, 160, 16, 16 )
+4/tile_mode = 0
+4/occluder_offset = Vector2( 0, 0 )
+4/navigation_offset = Vector2( 0, 0 )
+4/shape_offset = Vector2( 0, 0 )
+4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+4/shape_one_way = false
+4/shape_one_way_margin = 0.0
+4/shapes = [  ]
+4/z_index = 0
 
 [sub_resource type="AtlasTexture" id=31]
 atlas = ExtResource( 6 )
@@ -644,6 +674,27 @@ animations = [ {
 "speed": 5.0
 } ]
 
+[sub_resource type="ShaderMaterial" id=44]
+shader = ExtResource( 7 )
+shader_param/line_color = Color( 1, 1, 1, 0.517647 )
+shader_param/line_thickness = 1.0
+
+[sub_resource type="AtlasTexture" id=41]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=42]
+atlas = ExtResource( 8 )
+region = Rect2( 16, 0, 16, 18 )
+
+[sub_resource type="SpriteFrames" id=43]
+animations = [ {
+"frames": [ SubResource( 41 ), SubResource( 42 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
 [node name="MainScene" type="YSort"]
 script = ExtResource( 2 )
 
@@ -663,7 +714,7 @@ tile_set = SubResource( 7 )
 cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 format = 1
-tile_data = PoolIntArray( -65535, 0, 0, -65534, 2, 0, -65533, 2, 0, -65532, 2, 0, -65531, 2, 0, -65530, 2, 0, -65529, 2, 0, -65528, 2, 0, -65527, 2, 0, -65526, 2, 0, -65525, 2, 0, -65524, 2, 0, -65523, 2, 0, -65522, 2, 0, -65521, 2, 0, -65520, 2, 0, -65519, 2, 0, -65518, 3, 0, 1, 24, 0, 2, 2, 0, 3, 1, 0, 4, 1, 0, 5, 2, 0, 6, 2, 0, 7, 2, 0, 8, 2, 0, 9, 2, 0, 10, 2, 0, 11, 2, 0, 12, 2, 0, 13, 2, 0, 14, 2, 0, 15, 2, 0, 16, 2, 0, 17, 2, 0, 18, 25, 0, 65537, 9, 0, 65538, 20, 0, 65554, 4, 0, 131073, 9, 0, 131090, 4, 0, 196609, 9, 0, 196622, 0, 0, 196623, 0, 0, 196626, 4, 0, 262145, 9, 0, 262162, 4, 0, 327681, 9, 0, 327683, 0, 0, 327684, 0, 0, 327698, 4, 0, 393217, 9, 0, 393234, 4, 0, 458753, 9, 0, 458763, 0, 0, 458764, 0, 0, 458770, 4, 0, 524289, 9, 0, 524306, 4, 0, 589825, 9, 0, 589842, 4, 0, 655361, 8, 0, 655362, 6, 0, 655363, 6, 0, 655364, 6, 0, 655365, 7, 0, 655366, 6, 0, 655367, 6, 0, 655368, 6, 0, 655369, 6, 0, 655370, 6, 0, 655371, 6, 0, 655372, 6, 0, 655373, 6, 0, 655374, 6, 0, 655375, 6, 0, 655376, 6, 0, 655377, 6, 0, 655378, 5, 0 )
+tile_data = PoolIntArray( -65535, 0, 0, -65534, 2, 0, -65533, 2, 0, -65532, 2, 0, -65531, 2, 0, -65530, 2, 0, -65529, 2, 0, -65528, 2, 0, -65527, 2, 0, -65526, 2, 0, -65525, 2, 0, -65524, 2, 0, -65523, 2, 0, -65522, 2, 0, -65521, 2, 0, -65520, 2, 0, -65519, 2, 0, -65518, 3, 0, 1, 24, 0, 2, 2, 0, 3, 1, 0, 4, 1, 0, 5, 2, 0, 6, 2, 0, 7, 2, 0, 8, 2, 0, 9, 2, 0, 10, 2, 0, 11, 2, 0, 12, 2, 0, 13, 2, 0, 14, 2, 0, 15, 2, 0, 16, 2, 0, 17, 2, 0, 18, 25, 0, 65537, 9, 0, 65538, 20, 0, 65554, 4, 0, 131073, 9, 0, 131090, 4, 0, 196609, 9, 0, 196622, 0, 0, 196623, 0, 0, 196626, 4, 0, 262145, 9, 0, 262162, 4, 0, 327681, 9, 0, 327683, 0, 0, 327684, 0, 0, 327698, 4, 0, 393217, 9, 0, 393234, 4, 0, 458753, 9, 0, 458763, 0, 0, 458764, 0, 0, 458770, 4, 0, 524289, 9, 0, 524306, 4, 0, 589825, 9, 0, 589842, 4, 0, 655361, 8, 0, 655362, 6, 0, 655363, 6, 0, 655364, 6, 0, 655365, 7, 0, 655366, 6, 0, 655367, 6, 0, 655368, 6, 0, 655369, 6, 0, 655370, 6, 0, 655371, 6, 0, 655372, 6, 0, 655373, 6, 0, 655374, 6, 0, 655375, 6, 0, 655376, 6, 0, 655377, 7, 0, 655378, 5, 0 )
 
 [node name="Items" type="TileMap" parent="Navigation2D"]
 z_index = 12
@@ -671,7 +722,7 @@ tile_set = SubResource( 40 )
 cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 format = 1
-tile_data = PoolIntArray( 7, 0, 0, 8, 1, 0, 65542, 2, 0, 589842, 2, 0 )
+tile_data = PoolIntArray( 7, 0, 0, 8, 1, 0, 65542, 2, 0, 393232, 3, 0, 458768, 3, 0, 524304, 3, 0, 589840, 3, 0 )
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -718,11 +769,18 @@ type = 4
 position = Vector2( 72, 12 )
 z_index = 9
 frames = SubResource( 33 )
+frame = 1
 playing = true
 
 [node name="Cook2" type="AnimatedSprite" parent="."]
 position = Vector2( 56, 12 )
 z_index = 9
 frames = SubResource( 36 )
-frame = 1
+playing = true
+
+[node name="Waiter" type="AnimatedSprite" parent="."]
+material = SubResource( 44 )
+position = Vector2( 291, 61 )
+z_index = 12
+frames = SubResource( 43 )
 playing = true
