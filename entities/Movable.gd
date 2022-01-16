@@ -43,8 +43,6 @@ func _physics_process(delta):
 	elif collision_mask == 0:
 		collision_mask = 1
 	
-	print("v_buffer ", v_buffer)
-	
 	velocity = Vector2.ZERO
 	if v_buffer.length() > 0:
 		velocity = lerp(velocity, Vector2(v_buffer[0], v_buffer[1]) * speed * delta, acceleration)
@@ -119,7 +117,9 @@ remotesync func play(anim):
 		$AnimatedSprite.play(anim)
 
 puppet func puppet_move(origin):
+	print("muving 1")
 	if Net.is_from_server():
+		print("muving 2")
 		transform.origin = origin
 		
 func delete_children(node):
