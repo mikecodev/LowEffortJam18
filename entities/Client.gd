@@ -78,8 +78,8 @@ func Leave():
 	emit_signal("ImLeaving", self)
 func ExitStore():
 	# TODO: Open the door, leave the store and QueueFree
-	Net.rpc("remove_entity", get_path())
-	Net.rpc("remove_entity", Movable.get_path())
+	Net.rpc("remove_entity", Movable.get_path()) # movable deletion must be broadcasted
+	queue_free() # Client exists in server only, dont need to broadcast deletion
 func OnFreeTable(_Destination : Vector2):
 	if State == STATE.Queuing:
 		State = STATE.WalkingToTable

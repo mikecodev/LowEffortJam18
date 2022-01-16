@@ -135,9 +135,8 @@ remotesync func remove_entity(pathname: String):
 		var node = get_node(pathname)
 		if world and node:
 			node.queue_free()
-			var Movable = node.GetMovable()
-			players.erase(Movable.get_instance_id())
-			Movable.queue_free()
+			if players.has(node.get_instance_id()):
+				players.erase(node.get_instance_id())
 	
 # -----
 # UTILS
