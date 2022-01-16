@@ -11,6 +11,10 @@ enum TYPE {
 	Npc03
 }
 
+enum LOOK {
+	up, down, left, right
+}
+
 export var speed = 200
 export var friction = 0.01
 export var acceleration = 0.1
@@ -46,8 +50,17 @@ func play_bubble(status):
 func reset_allow_animation_change():
 	allow_animation_change = true
 
-func set_name(name):
-	$Floating.set_text(name)
+remotesync func look_to(name):
+	if Net.is_from_server():
+		match name:
+			LOOK.up:
+				update_play("idleup")
+			LOOK.down:
+				update_play("idledown")
+			LOOK.left:
+				update_play("idleleft")
+			LOOK.right:
+				update_play("idleright")
 	
 func _physics_process(delta):
 	if path and path.size() > 0:

@@ -33,20 +33,26 @@ func EnterQueue(Client) -> bool:
 		Client.connect("ImLeaving", self, "OnPlayerLeaving")
 		return true
 	return false
+	
 func ArrivedToQueueDestination():
 	while(FreeTables.size() > 0 and QueuedClients.size() > 0 and QueuedClients[0].State == Client.STATE.Queuing):
 		var Table = FreeTables.pop_front()
 		# TODO: So far we have no groups, so we are just sitting random people together. This should change to customers arriving together
-		var NumClients = rand_range(1, min(Table.Seats.size(), QueuedClients.size()))
+		var NumClients = rand_range(1, QueuedClients.size())
 		var ClientsToSit = []
 		for _n in range(NumClients):
 			ClientsToSit.append(QueuedClients.pop_front())
 		Table.Sit(ClientsToSit)
+	# Reposition the remaining clients ahead
+	for Idx in range(0, QueuedClients.size()):
+		QueuedClients[Idx].Destination = Vector2(Defs.QUEUE_HEAD_POS.x, Defs.QUEUE_HEAD_POS.y + Idx * SPRITE_HEIGHT)
+		QueuedClients[Idx].AdvancePositionInQueue()
+
 func OnFreeTable(Table):
 	FreeTables.append(Table)
 func OnClientSpawn():
 	add_child(CLIENT_SCENE.instance())
-	SpawnTimer.wait_time = rand_range(12, 20)
+	SpawnTimer.wait_time = rand_range(Defs.MAX_SPAWN_TIME, Defs.MAX_SPAWN_TIME)
 	SpawnTimer.start()
 func Start():
 	if is_network_master():
