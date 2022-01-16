@@ -78,10 +78,10 @@ master func register_player(name):
 		# var m = get_node("/root/Menu")
 		# m.get_parent().remove_child(m)
 	var id = get_id()
-	register_person(name, PLAYER_SPAWN, id)
+	register_person(name, PLAYER_SPAWN, 0, id)
 	rpc_id(id, "load_world")
 	
-func register_person(name, pos = Vector2(5, 5), id = 0):
+func register_person(name, pos = Vector2(5, 5), skin = 0, id = 0):
 	if is_network_master():
 		var pi = c_person.instance()
 		if id == 0:
@@ -90,10 +90,12 @@ func register_person(name, pos = Vector2(5, 5), id = 0):
 		players[id] = {
 			name = name,
 			body = pi,
-			pathname = pathname
+			pathname = pathname,
+			skin = skin
 		}
 		pi.name = pathname
 		pi.global_position = pos
+		pi.skin = skin
 		world.add_child(pi)
 		broadcast_world()
 		return pi.get_path()
@@ -101,7 +103,7 @@ func register_person(name, pos = Vector2(5, 5), id = 0):
 func broadcast_world():
 	for pid in players:
 		var p = players[pid]
-		rpc("instance_person", p.name, p.pathname, p.body.global_position)
+		rpc("instance_person", p.name, p.pathname, p.body.global_position, p.skin)
 	
 master func move_player(input_v: Vector2):
 	players[get_id()].body.move(input_v)
@@ -121,19 +123,20 @@ remotesync func load_world():
 	if is_from_server():
 		emit_signal("StartOnline")
 
-remotesync func instance_person(name: String, pathname, position: Vector2):
+remotesync func instance_person(name: String, pathname, position: Vector2, skin):
 	if is_local or is_network_master(): return
 	if is_from_server() and world:
 		if not world.get_node(pathname):
 			var pi = c_person.instance()
 			pi.name = pathname
 			pi.global_position = position
+			pi.skin = skin
 			world.add_child(pi)
 		
 remotesync func remove_entity(pathname: String):
 	if is_from_server():
-		if world and world.get_node(pathname):
-			world.remove_child(world.get_node(pathname))
+		if world and get_node(pathname):
+			get_node(pathname).get_parent().remove_child(get_node(pathname))
 	
 # -----
 # UTILS

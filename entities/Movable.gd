@@ -25,6 +25,7 @@ var freezed = false
 var velocity: Vector2 = Vector2.ZERO
 var v_buffer: Vector2 = Vector2.ZERO
 var path: PoolVector2Array
+var skin = 0
 onready var animated_sprite: AnimatedSprite = $asPlayer
 
 func _ready():
@@ -37,6 +38,7 @@ func _ready():
 	else:
 		set_process(false)
 		set_physics_process(false)
+	update_skin()
 
 func play_bubble(status):
 	$Bubble.play_status(status)
@@ -146,14 +148,14 @@ func skill(num: int, pos: Vector2):
 			update_play("walk")
 			Net.rpc("take_pizza")
 			
-remotesync func SetType(type):
-	if Net.is_from_server():
-		match type:
-			TYPE.Npc01:
-				animated_sprite = $asNpc01
-			TYPE.Npc02:
-				animated_sprite = $asNpc02
-			TYPE.Npc03:
-				animated_sprite = $asNpc03
-		animated_sprite.visible = true
-		$asPlayer.visible = false
+func update_skin():
+	match skin:
+		TYPE.Player:
+			animated_sprite = $asPlayer
+		TYPE.Npc01:
+			animated_sprite = $asNpc01
+		TYPE.Npc02:
+			animated_sprite = $asNpc02
+		TYPE.Npc03:
+			animated_sprite = $asNpc03
+	animated_sprite.visible = true
