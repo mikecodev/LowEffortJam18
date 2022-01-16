@@ -116,17 +116,17 @@ animations = [ {
 "frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
 "loop": true,
 "name": "left",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
 "loop": true,
 "name": "right",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 2 ), SubResource( 3 ) ],
 "loop": true,
 "name": "up",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 12 ), SubResource( 13 ) ],
 "loop": true,
@@ -141,7 +141,7 @@ animations = [ {
 "frames": [ SubResource( 5 ), SubResource( 6 ) ],
 "loop": true,
 "name": "down",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 19 ), SubResource( 20 ) ],
 "loop": true,
@@ -231,17 +231,17 @@ animations = [ {
 "frames": [ SubResource( 88 ), SubResource( 89 ), SubResource( 90 ) ],
 "loop": true,
 "name": "left",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 91 ), SubResource( 92 ), SubResource( 93 ) ],
 "loop": true,
 "name": "right",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 38 ), SubResource( 39 ) ],
 "loop": true,
 "name": "up",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 28 ), SubResource( 29 ) ],
 "loop": true,
@@ -256,7 +256,7 @@ animations = [ {
 "frames": [ SubResource( 24 ), SubResource( 25 ) ],
 "loop": true,
 "name": "down",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 30 ), SubResource( 31 ) ],
 "loop": true,
@@ -346,17 +346,17 @@ animations = [ {
 "frames": [ SubResource( 94 ), SubResource( 95 ), SubResource( 96 ) ],
 "loop": true,
 "name": "left",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 97 ), SubResource( 98 ), SubResource( 99 ) ],
 "loop": true,
 "name": "right",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 47 ), SubResource( 48 ) ],
 "loop": true,
 "name": "up",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 59 ), SubResource( 60 ) ],
 "loop": true,
@@ -371,7 +371,7 @@ animations = [ {
 "frames": [ SubResource( 45 ), SubResource( 46 ) ],
 "loop": true,
 "name": "down",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 51 ), SubResource( 52 ) ],
 "loop": true,
@@ -461,17 +461,17 @@ animations = [ {
 "frames": [ SubResource( 76 ), SubResource( 77 ), SubResource( 78 ) ],
 "loop": true,
 "name": "left",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 83 ), SubResource( 84 ), SubResource( 85 ) ],
 "loop": true,
 "name": "right",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 79 ), SubResource( 80 ) ],
 "loop": true,
 "name": "up",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 81 ), SubResource( 82 ) ],
 "loop": true,
@@ -486,7 +486,7 @@ animations = [ {
 "frames": [ SubResource( 100 ), SubResource( 101 ) ],
 "loop": true,
 "name": "down",
-"speed": 5.0
+"speed": 7.0
 }, {
 "frames": [ SubResource( 74 ), SubResource( 75 ) ],
 "loop": true,
@@ -507,16 +507,16 @@ position = Vector2( 0, 4 )
 shape = SubResource( 1 )
 
 [node name="asPlayer" type="AnimatedSprite" parent="."]
-visible = false
 frames = SubResource( 4 )
 animation = "idledown"
+frame = 1
 playing = true
 
 [node name="asNpc01" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 23 )
 animation = "right"
-frame = 2
+frame = 1
 playing = true
 
 [node name="asNpc02" type="AnimatedSprite" parent="."]
@@ -524,14 +524,13 @@ visible = false
 position = Vector2( 0, -1 )
 frames = SubResource( 44 )
 animation = "right"
-frame = 1
+frame = 2
 playing = true
 
 [node name="asNpc03" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 63 )
 animation = "down"
-frame = 1
 playing = true
 
 [node name="Bubble" parent="." instance=ExtResource( 10 )]
