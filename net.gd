@@ -22,7 +22,10 @@ func _ready():
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 
 func run_local():
-	run_as_server()
+	var peer = NetworkedMultiplayerENet.new()
+	peer.set_bind_ip("127.0.0.1")
+	peer.create_server(29002, 512)
+	get_tree().network_peer = peer
 	is_local = true
 
 func run_as_server():

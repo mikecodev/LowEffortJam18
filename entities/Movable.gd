@@ -52,6 +52,7 @@ func _physics_process(delta):
 		move_along_path()
 	elif collision_mask == 0:
 		collision_mask = 1
+		collision_layer = 1
 	
 	velocity = Vector2.ZERO
 	if v_buffer.length() > 0:
@@ -88,6 +89,7 @@ func move(direction):
 	
 func move_to(target_position: Vector2):
 	collision_mask = 0
+	collision_layer = 0
 	path = navigation.get_simple_path(global_position, target_position)
 	
 func move_along_path():
@@ -127,9 +129,7 @@ remotesync func play(anim):
 		animated_sprite.play(anim)
 
 puppet func puppet_move(origin):
-	print("muving 1")
 	if Net.is_from_server():
-		print("muving 2")
 		transform.origin = origin
 		
 func delete_children(node):
