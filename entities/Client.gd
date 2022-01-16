@@ -3,7 +3,7 @@ extends Node2D
 class_name Client
 
 signal LeaveTip(Money)
-signal ImLeaving()
+signal ImLeaving(Client)
 
 enum STATE {
 	Entering,
@@ -75,7 +75,7 @@ func LeaveAndTip():
 func Leave():
 	State = STATE.Leaving
 	MovableObj.move_to(Defs.EXIT_POS)
-	emit_signal("ImLeaving")
+	emit_signal("ImLeaving", self)
 func ExitStore():
 	# TODO: Open the door, leave the store and QueueFree
 	Net.rpc("remove_entity", MovableObj.get_path()) # movable deletion must be broadcasted

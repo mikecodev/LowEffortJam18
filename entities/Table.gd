@@ -31,7 +31,7 @@ func OnNpcSatisfied(NpcTip):
 	ClientsEating -= 1
 	if(ClientsEating == 0):
 		FreeTable()
-func OnClientLeavingEarly():
+func OnClientLeavingEarly(_Client):
 	# TODO: DECREASE LIFES?
 	ClientsEating -= 1
 	if ClientsEating == 0:
