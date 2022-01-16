@@ -5,7 +5,9 @@ class_name Cook
 const c_pizza = preload("res://entities/Pizza.tscn")
 
 remotesync func add_pizza(order):
+	print("summon pizza 1")
 	if Net.is_from_server():
+		print("summon pizza 2")
 		var pizza = c_pizza.instance()
 		pizza.SetPizzaType(order)
 		get_parent().add_child(pizza)
