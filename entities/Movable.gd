@@ -28,6 +28,9 @@ func _ready():
 		set_process(false)
 		set_physics_process(false)
 
+func play_bubble(status):
+	$Bubble.play_status(status)
+
 func reset_allow_animation_change():
 	allow_animation_change = true
 

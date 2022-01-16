@@ -39,6 +39,7 @@ func _ready():
 	$PatienceTimer.connect("timeout", self, "MyPatienceIsGrowingSmaller")
 	ClientManager = get_node("/root/ClientManager")
 	Movable.move_to(Defs.ENTRY_POS)
+	Movable.play_bubble(Bubble.STATUS.upset)
 
 func AskForQueueSpace():	
 	var QueueEntered = ClientManager.EnterQueue(self)
@@ -101,3 +102,6 @@ func MyPatienceIsGrowingSmaller():
 	if Satisfaction == 0:
 		Leave()
 	# TODO: Also add an object and call it here to update the patience visual effect
+
+func GetStatusBubble():
+	pass
