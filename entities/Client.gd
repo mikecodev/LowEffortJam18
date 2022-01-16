@@ -84,6 +84,7 @@ func WaitForFood():
 	else:
 		TargetPizzaTopping = 2
 	MovableObj.rpc("play_bubble", CurrentBubble)
+	Defs.orders.append(CurrentBubble)
 	# TODO: Either choose a random food now or this should be done outside this class or in the ready
 	# TODO: ShowPizzaSign() Should show a bubble with the desired pizza
 func LeaveAndTip():

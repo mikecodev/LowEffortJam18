@@ -2,26 +2,7 @@ extends Area2D
 
 class_name Pizza
 
-enum TYPE {
-	PSmall,
-	PLarge,
-	MSmall,
-	MLarge,
-	VSmall,
-	VLarge,
-	Beer
-}
-
-enum STATUS {
-	Ready,
-	BeingServed,
-	Served,
-	Droped
-}
-
 var sprite: AnimatedSprite
-export(TYPE) var type
-export(STATUS) var status
 
 func area_enabled(yes):
 	if yes:
@@ -31,25 +12,14 @@ func area_enabled(yes):
 
 func SetPizzaType(type):
 	match type:
-		TYPE.PSmall:
+		Bubble.STATUS.pepperoni_pizza_small:
 			sprite = $PSmall
-		TYPE.PLarge:
+		Bubble.STATUS.pepperoni_pizza_large:
 			sprite = $PLarge
-		TYPE.MSmall:
-			sprite = $MSmall
-		TYPE.MLarge:
-			sprite = $MLarge
-		TYPE.VSmall:
+		Bubble.STATUS.veggie_pizza_small:
 			sprite = $VSmall
-		TYPE.VLarge:
+		Bubble.STATUS.veggie_pizza_large:
 			sprite = $VLarge
-		TYPE.Beer:
+		Bubble.STATUS.beer:
 			sprite = $Beer
-	$PSmall.visible = false
-	$PLarge.visible = false
-	$MSmall.visible = false
-	$MLarge.visible = false
-	$VSmall.visible = false
-	$VLarge.visible = false
-	$Beer.visible = false
 	sprite.visible = true

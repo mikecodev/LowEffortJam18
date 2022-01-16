@@ -11,6 +11,8 @@ const MAX_SPAWN_TIME	= 5
 
 onready var Rand = RandomNumberGenerator.new()
 
+onready var orders: Array = []
+
 func _ready():
 	set_process(false)
 	randomize()

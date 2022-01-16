@@ -1,11 +1,10 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://entities/GUI/HUD.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels/LevelController.gd" type="Script" id=2]
 [ext_resource path="res://entities/Table.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/tileset.png" type="Texture" id=4]
-[ext_resource path="res://entities/Pizza.tscn" type="PackedScene" id=5]
-[ext_resource path="res://sprites/cook.png" type="Texture" id=6]
+[ext_resource path="res://entities/Cook.tscn" type="PackedScene" id=6]
 [ext_resource path="res://shaders/outline.gdshader" type="Shader" id=7]
 [ext_resource path="res://sprites/waiter.png" type="Texture" id=8]
 
@@ -642,38 +641,6 @@ points = PoolVector2Array( 0, 0, 3.72151, 0.0476112, 3.72151, 16, 0, 16 )
 4/shapes = [  ]
 4/z_index = 0
 
-[sub_resource type="AtlasTexture" id=31]
-atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=32]
-atlas = ExtResource( 6 )
-region = Rect2( 16, 0, 16, 16 )
-
-[sub_resource type="SpriteFrames" id=33]
-animations = [ {
-"frames": [ SubResource( 31 ), SubResource( 32 ) ],
-"loop": true,
-"name": "default",
-"speed": 4.0
-} ]
-
-[sub_resource type="AtlasTexture" id=34]
-atlas = ExtResource( 6 )
-region = Rect2( 0, 0, 16, 16 )
-
-[sub_resource type="AtlasTexture" id=35]
-atlas = ExtResource( 6 )
-region = Rect2( 16, 0, 16, 16 )
-
-[sub_resource type="SpriteFrames" id=36]
-animations = [ {
-"frames": [ SubResource( 34 ), SubResource( 35 ) ],
-"loop": true,
-"name": "default",
-"speed": 5.0
-} ]
-
 [sub_resource type="ShaderMaterial" id=44]
 shader = ExtResource( 7 )
 shader_param/line_color = Color( 1, 1, 1, 0.517647 )
@@ -750,36 +717,18 @@ z_index = 12
 position = Vector2( 160, 64 )
 z_index = 12
 
-[node name="PizzaSpawn1" parent="." instance=ExtResource( 5 )]
-position = Vector2( 45, 25 )
-z_index = 12
-type = 1
-
-[node name="PizzaSpawn2" parent="." instance=ExtResource( 5 )]
-position = Vector2( 64, 25 )
-z_index = 12
-type = 6
-
-[node name="PizzaSpawn3" parent="." instance=ExtResource( 5 )]
-position = Vector2( 83, 25 )
-z_index = 12
-type = 4
-
-[node name="Cook1" type="AnimatedSprite" parent="."]
-position = Vector2( 72, 12 )
-z_index = 9
-frames = SubResource( 33 )
-playing = true
-
-[node name="Cook2" type="AnimatedSprite" parent="."]
-position = Vector2( 56, 12 )
-z_index = 9
-frames = SubResource( 36 )
-playing = true
-
 [node name="Waiter" type="AnimatedSprite" parent="."]
 material = SubResource( 44 )
 position = Vector2( 291, 61 )
 z_index = 12
 frames = SubResource( 43 )
+frame = 1
 playing = true
+
+[node name="Cook1" parent="." instance=ExtResource( 6 )]
+position = Vector2( 56, 12 )
+z_index = 9
+
+[node name="Cook2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 72, 12 )
+z_index = 9
