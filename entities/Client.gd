@@ -17,6 +17,13 @@ enum STATE {
 	Leaving
 }
 
+
+var FOOD_CHOICES = [Bubble.STATUS.veggie_pizza_small,
+Bubble.STATUS.veggie_pizza_large,
+Bubble.STATUS.pepperoni_pizza_small,
+Bubble.STATUS.pepperoni_pizza_large,
+Bubble.STATUS.beer]
+
 export(float, 0, 1) var Patience : float
 export(int, 0, 100) var Satisfaction : int
 
@@ -64,7 +71,19 @@ func WaitForATable():
 func WaitForFood():
 	State = STATE.WaitingForFood
 	MovableObj.rpc("look_to", LookAtDir)
-	
+	CurrentBubble = FOOD_CHOICES[Defs.Rand.randi_range(0, FOOD_CHOICES.size())]
+	 
+	if CurrentBubble in [Bubble.STATUS.pepperoni_pizza_large, Bubble.STATUS.veggie_pizza_large]:
+		TargetPizzaSize = 1
+	else:
+		TargetPizzaSize = 0
+	if CurrentBubble in [Bubble.STATUS.veggie_pizza_small, Bubble.STATUS.veggie_pizza_large]:
+		TargetPizzaTopping = 0
+	elif CurrentBubble in [Bubble.STATUS.pepperoni_pizza_small, Bubble.STATUS.pepperoni_pizza_large]:
+		TargetPizzaTopping = 1
+	else:
+		TargetPizzaTopping = 2
+	MovableObj.play_bubble(CurrentBubble)
 	# TODO: Either choose a random food now or this should be done outside this class or in the ready
 	# TODO: ShowPizzaSign() Should show a bubble with the desired pizza
 func LeaveAndTip():
@@ -119,7 +138,7 @@ func MyPatienceIsGrowingSmaller():
 	Satisfaction = int(clamp(Satisfaction - Patience, 0, 100))
 	if Satisfaction < 50 and SatisfactionWarning == 0 or Satisfaction < 25 and SatisfactionWarning == 1:
 		SatisfactionWarning = SatisfactionWarning + 1
-		MovableObj.play_bubble(Bubble.STATUS.upset)
+		MovableObj.play_bubble(Bubble.STATUS.unhappy)
 		$ResetBubble.start()
 	# TODO: Add the pissed off probability here (among other places). It has to be very small!
 	if Satisfaction == 0:
