@@ -1,4 +1,4 @@
-[gd_scene load_steps=115 format=2]
+[gd_scene load_steps=141 format=2]
 
 [ext_resource path="res://sprites/playerup.png" type="Texture" id=1]
 [ext_resource path="res://sprites/playerdown.png" type="Texture" id=2]
@@ -35,6 +35,14 @@
 [ext_resource path="res://sprites/npc03-right.png" type="Texture" id=33]
 [ext_resource path="res://sprites/npc03down.png" type="Texture" id=34]
 [ext_resource path="res://shaders/outline.gdshader" type="Shader" id=35]
+[ext_resource path="res://sprites/playerside-left-handsup.png" type="Texture" id=36]
+[ext_resource path="res://sprites/playerside-handsup.png" type="Texture" id=37]
+[ext_resource path="res://sprites/playerdown-handsup.png" type="Texture" id=38]
+[ext_resource path="res://sprites/playerup-handsup.png" type="Texture" id=39]
+[ext_resource path="res://sprites/playerside-idle-left-handsup.png" type="Texture" id=40]
+[ext_resource path="res://sprites/playerside-idle-handsup.png" type="Texture" id=41]
+[ext_resource path="res://sprites/playerdown-idle-handsup.png" type="Texture" id=42]
+[ext_resource path="res://sprites/playerup-idle-handsup.png" type="Texture" id=43]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 3.0
@@ -77,6 +85,38 @@ region = Rect2( 0, 0, 16, 16 )
 atlas = ExtResource( 1 )
 region = Rect2( 16, 0, 16, 16 )
 
+[sub_resource type="AtlasTexture" id=110]
+atlas = ExtResource( 38 )
+region = Rect2( 0, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=111]
+atlas = ExtResource( 38 )
+region = Rect2( 16, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=114]
+atlas = ExtResource( 37 )
+region = Rect2( 0, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=115]
+atlas = ExtResource( 37 )
+region = Rect2( 16, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=116]
+atlas = ExtResource( 37 )
+region = Rect2( 32, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=117]
+atlas = ExtResource( 36 )
+region = Rect2( 0, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=118]
+atlas = ExtResource( 36 )
+region = Rect2( 16, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=119]
+atlas = ExtResource( 36 )
+region = Rect2( 32, 0, 16, 18 )
+
 [sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 6 )
 region = Rect2( 0, 0, 16, 16 )
@@ -117,6 +157,46 @@ region = Rect2( 0, 0, 16, 16 )
 atlas = ExtResource( 5 )
 region = Rect2( 16, 0, 16, 16 )
 
+[sub_resource type="AtlasTexture" id=120]
+atlas = ExtResource( 40 )
+region = Rect2( 0, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=121]
+atlas = ExtResource( 40 )
+region = Rect2( 16, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=122]
+atlas = ExtResource( 41 )
+region = Rect2( 0, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=123]
+atlas = ExtResource( 41 )
+region = Rect2( 16, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=124]
+atlas = ExtResource( 42 )
+region = Rect2( 0, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=125]
+atlas = ExtResource( 42 )
+region = Rect2( 16, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=126]
+atlas = ExtResource( 43 )
+region = Rect2( 0, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=127]
+atlas = ExtResource( 43 )
+region = Rect2( 16, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=112]
+atlas = ExtResource( 39 )
+region = Rect2( 0, 0, 16, 18 )
+
+[sub_resource type="AtlasTexture" id=113]
+atlas = ExtResource( 39 )
+region = Rect2( 16, 0, 16, 18 )
+
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
 "frames": [ SubResource( 16 ), SubResource( 17 ), SubResource( 18 ) ],
@@ -133,6 +213,21 @@ animations = [ {
 "loop": true,
 "name": "up",
 "speed": 7.0
+}, {
+"frames": [ SubResource( 110 ), SubResource( 111 ) ],
+"loop": true,
+"name": "down_handsup",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 114 ), SubResource( 115 ), SubResource( 116 ) ],
+"loop": true,
+"name": "right_handsup",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 117 ), SubResource( 118 ), SubResource( 119 ) ],
+"loop": true,
+"name": "left_handsup",
+"speed": 5.0
 }, {
 "frames": [ SubResource( 12 ), SubResource( 13 ) ],
 "loop": true,
@@ -157,6 +252,31 @@ animations = [ {
 "frames": [ SubResource( 10 ), SubResource( 11 ) ],
 "loop": true,
 "name": "idledown",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 120 ), SubResource( 121 ) ],
+"loop": true,
+"name": "idleleft_handsup",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 122 ), SubResource( 123 ) ],
+"loop": true,
+"name": "idleright_handsup",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 124 ), SubResource( 125 ) ],
+"loop": true,
+"name": "idledown_handsup",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 126 ), SubResource( 127 ) ],
+"loop": true,
+"name": "idleup_handsup",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 112 ), SubResource( 113 ) ],
+"loop": true,
+"name": "up_handsup",
 "speed": 5.0
 } ]
 
@@ -523,8 +643,7 @@ visible = false
 material = SubResource( 102 )
 position = Vector2( 0, -8 )
 frames = SubResource( 4 )
-animation = "idledown"
-frame = 1
+animation = "idledown_handsup"
 
 [node name="asNpc01" type="AnimatedSprite" parent="."]
 visible = false
