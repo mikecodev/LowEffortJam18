@@ -17,6 +17,13 @@ enum STATE {
 	Leaving
 }
 
+
+var FOOD_CHOICES = [Bubble.STATUS.veggie_pizza_small,
+Bubble.STATUS.veggie_pizza_large,
+Bubble.STATUS.pepperoni_pizza_small,
+Bubble.STATUS.pepperoni_pizza_large,
+Bubble.STATUS.beer]
+
 export(float, 0, 1) var Patience : float
 export(int, 0, 100) var Satisfaction : int
 
@@ -64,7 +71,21 @@ func WaitForATable():
 func WaitForFood():
 	State = STATE.WaitingForFood
 	MovableObj.rpc("look_to", LookAtDir)
-	
+	var Idx = Defs.Rand.randi_range(0, FOOD_CHOICES.size())
+	print(Idx)
+	CurrentBubble = FOOD_CHOICES[Idx]
+	 
+	if CurrentBubble in [Bubble.STATUS.pepperoni_pizza_large, Bubble.STATUS.veggie_pizza_large]:
+		TargetPizzaSize = 1
+	else:
+		TargetPizzaSize = 0
+	if CurrentBubble in [Bubble.STATUS.veggie_pizza_small, Bubble.STATUS.veggie_pizza_large]:
+		TargetPizzaTopping = 0
+	elif CurrentBubble in [Bubble.STATUS.pepperoni_pizza_small, Bubble.STATUS.pepperoni_pizza_large]:
+		TargetPizzaTopping = 1
+	else:
+		TargetPizzaTopping = 2
+	MovableObj.play_bubble(CurrentBubble)
 	# TODO: Either choose a random food now or this should be done outside this class or in the ready
 	# TODO: ShowPizzaSign() Should show a bubble with the desired pizza
 func LeaveAndTip():
