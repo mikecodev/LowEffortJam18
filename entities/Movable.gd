@@ -174,16 +174,24 @@ remotesync func play(anim):
 		animated_sprite.play(anim)
 		match anim:
 			"idledown": continue
-			"down":
+			"idledown_handsup": continue
+			"down": continue
+			"down_handsup":
 				looking_at = LOOK.down
 			"idleup": continue
-			"up":
+			"idleup_handsup": continue
+			"up": continue
+			"up_handsup":
 				looking_at = LOOK.up
 			"idleleft": continue
-			"left":
+			"idleleft_handsup": continue
+			"left": continue
+			"left_handsup":
 				looking_at = LOOK.left
 			"idleright": continue
-			"right":
+			"idleright_handsup": continue
+			"right": continue
+			"right_handsup":
 				looking_at = LOOK.right
 
 puppet func puppet_move(origin):
