@@ -146,13 +146,14 @@ func skill(num: int, pos: Vector2):
 			update_play("walk")
 			Net.rpc("take_pizza")
 			
-func SetType(type):
-	match type:
-		TYPE.Npc01:
-			animated_sprite = $asNpc01
-		TYPE.Npc02:
-			animated_sprite = $asNpc02
-		TYPE.Npc03:
-			animated_sprite = $asNpc03
-	animated_sprite.visible = true
-	$asPlayer.visible = false
+remotesync func SetType(type):
+	if Net.is_from_server():
+		match type:
+			TYPE.Npc01:
+				animated_sprite = $asNpc01
+			TYPE.Npc02:
+				animated_sprite = $asNpc02
+			TYPE.Npc03:
+				animated_sprite = $asNpc03
+		animated_sprite.visible = true
+		$asPlayer.visible = false
