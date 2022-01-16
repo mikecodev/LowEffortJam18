@@ -71,9 +71,7 @@ func WaitForATable():
 func WaitForFood():
 	State = STATE.WaitingForFood
 	MovableObj.rpc("look_to", LookAtDir)
-	var Idx = Defs.Rand.randi_range(0, FOOD_CHOICES.size())
-	print(Idx)
-	CurrentBubble = FOOD_CHOICES[Idx]
+	CurrentBubble = FOOD_CHOICES[Defs.Rand.randi_range(0, FOOD_CHOICES.size())]
 	 
 	if CurrentBubble in [Bubble.STATUS.pepperoni_pizza_large, Bubble.STATUS.veggie_pizza_large]:
 		TargetPizzaSize = 1
@@ -140,7 +138,7 @@ func MyPatienceIsGrowingSmaller():
 	Satisfaction = int(clamp(Satisfaction - Patience, 0, 100))
 	if Satisfaction < 50 and SatisfactionWarning == 0 or Satisfaction < 25 and SatisfactionWarning == 1:
 		SatisfactionWarning = SatisfactionWarning + 1
-		MovableObj.play_bubble(Bubble.STATUS.upset)
+		MovableObj.play_bubble(Bubble.STATUS.unhappy)
 		$ResetBubble.start()
 	# TODO: Add the pissed off probability here (among other places). It has to be very small!
 	if Satisfaction == 0:
