@@ -17,6 +17,7 @@ func OnStartServer():
 	get_node(CurrentScene).queue_free()
 	var World = WORLD_SCENE.instance()
 	add_child(World)
+	Net.run_as_server()
 	CurrentScene = World.get_path()
 
 func OnStartOnline():
