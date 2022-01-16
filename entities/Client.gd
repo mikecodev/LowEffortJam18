@@ -31,6 +31,7 @@ var ClientManager
 
 # tmp
 var Destination
+var LookAtDir = Vector2.DOWN
 
 # Output
 var Tip = 0.0
@@ -52,7 +53,6 @@ func AskForQueueSpace():
 	var QueueEntered = ClientManager.EnterQueue(self)
 	if QueueEntered:
 		State = STATE.WalkingToQueue
-		print("moving to queue space")
 		Movable.move_to(Destination)
 	else:
 		# TODO: Do we want pissed off clients that just enter the venue?
@@ -63,6 +63,8 @@ func WaitForATable():
 	ClientManager.ArrivedToQueueDestination()
 func WaitForFood():
 	State = STATE.WaitingForFood
+	Movable.LookAtDir(LookAtDir)
+	
 	# TODO: Either choose a random food now or this should be done outside this class or in the ready
 	# TODO: ShowPizzaSign() Should show a bubble with the desired pizza
 func LeaveAndTip():
@@ -73,7 +75,6 @@ func LeaveAndTip():
 		printerr("Client Error: LeaveAndTip received but state wasn't finished eating. State = ", State)
 func Leave():
 	State = STATE.Leaving
-	print("moving to exit")
 	Movable.move_to(Defs.EXIT_POS)
 	emit_signal("ImLeaving", self)
 func ExitStore():
@@ -83,7 +84,6 @@ func ExitStore():
 func OnFreeTable(_Destination : Vector2):
 	if State == STATE.Queuing:
 		State = STATE.WalkingToTable
-		print("moving to table")
 		Movable.move_to(_Destination)
 		return true
 	else:
@@ -106,7 +106,6 @@ func OnPositionArrival():
 			printerr("Client Error: Unexpected OnPositionArrival received when state is ", State)
 
 func AdvancePositionInQueue():
-	print("Move to Destination ", Destination)
 	Movable.move_to(Destination)
 	
 func DeliverFood(PizzaTopping, PizzaSize):

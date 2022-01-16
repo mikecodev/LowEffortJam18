@@ -3,10 +3,7 @@ extends StaticBody2D
 signal AddPoints(Points)
 signal FreeTable()
 
-const SEAT_OFFSET = 32
-
-# There might be one or more seats. Vector.Up, Vector.Down, Vector.Left, and Vector.Right
-export(Array, Vector2) var Seats
+onready var Seats = [$PosUp.position, $PosDown.position, $PosLeft.position, $PosRight.position]
 var SittingClients = []
 var ClientsEating = 0
 var Tip = 0
@@ -19,10 +16,11 @@ func Sit(ClientsToSit):
 	SittingClients = ClientsToSit
 	var SeatIdx = 0
 	for Client in ClientsToSit:
-		Client.OnFreeTable(Seats[SeatIdx]*SEAT_OFFSET + global_position)
+		Client.LookAtDir = Seats[SeatIdx]
+		Client.OnFreeTable(Seats[SeatIdx] + global_position)
 		ClientsEating += 1
 		Client.connect("LeaveTip", self, "OnNpcSatisfied")
-
+		Client.connect("ImLeaving", self, "OnClientLeavingEarly")
 func OnNpcSatisfied(NpcTip):
 	Tip += NpcTip
 	ClientsEating -= 1
@@ -37,3 +35,10 @@ func FreeTable():
 		Client.Leave()
 	SittingClients = 0
 	emit_signal("FreeTable", self)
+
+func OnClientLeavingEarly(Client):
+	# TODO: DECREASE LIFES?
+	ClientsEating -= 1
+	if ClientsEating == 0:
+		FreeTable()
+	
