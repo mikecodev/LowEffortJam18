@@ -535,4 +535,5 @@ frames = SubResource( 63 )
 animation = "down"
 
 [node name="Bubble" parent="." instance=ExtResource( 10 )]
-position = Vector2( 1, -20 )
+position = Vector2( 2, -22 )
+animation = "empty"

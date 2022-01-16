@@ -9,7 +9,12 @@ enum STATUS {
 	upset,
 	disappointed,
 	inlove,
-	alert
+	alert,
+	veggie_pizza_small,
+	veggie_pizza_large,
+	pepperoni_pizza_small,
+	pepperoni_pizza_large,
+	beer
 }
 
 func _ready():
