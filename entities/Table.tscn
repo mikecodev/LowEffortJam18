@@ -19,13 +19,13 @@ position = Vector2( 0, -2.5 )
 shape = SubResource( 1 )
 
 [node name="PosUp" type="Position2D" parent="."]
-position = Vector2( 0, -22 )
+position = Vector2( 0, -14 )
 
 [node name="PosLeft" type="Position2D" parent="."]
-position = Vector2( -25, -3 )
+position = Vector2( -17, 5 )
 
 [node name="PosRight" type="Position2D" parent="."]
-position = Vector2( 26, -3 )
+position = Vector2( 18, 5 )
 
 [node name="PosDown" type="Position2D" parent="."]
 position = Vector2( 0, 18 )
