@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://assets/fonts/pixelated.tres" type="DynamicFont" id=1]
 [ext_resource path="res://entities/GUI/HUD.gd" type="Script" id=2]
 [ext_resource path="res://sprites/gui-box-01.png" type="Texture" id=3]
-[ext_resource path="res://assets/fonts/retro_computer.tres" type="DynamicFont" id=4]
 
 [sub_resource type="StyleBoxTexture" id=1]
 texture = ExtResource( 3 )
@@ -23,47 +23,47 @@ __meta__ = {
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 margin_right = 148.0
-margin_bottom = 11.0
+margin_bottom = 10.0
 size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CenterContainer"]
-margin_left = 15.0
-margin_right = 132.0
-margin_bottom = 11.0
+margin_left = 35.0
+margin_right = 113.0
+margin_bottom = 9.0
 size_flags_horizontal = 3
 
 [node name="PointsLabel" type="Label" parent="CenterContainer/HBoxContainer"]
-margin_right = 45.0
-margin_bottom = 11.0
+margin_right = 28.0
+margin_bottom = 9.0
 custom_colors/font_color = Color( 0.427451, 0.313726, 0.152941, 1 )
-custom_fonts/font = ExtResource( 4 )
-text = "Points:"
+custom_fonts/font = ExtResource( 1 )
+text = "POINTS:"
 
 [node name="PointsValue" type="Label" parent="CenterContainer/HBoxContainer"]
-margin_left = 49.0
-margin_right = 56.0
-margin_bottom = 11.0
+margin_left = 32.0
+margin_right = 36.0
+margin_bottom = 9.0
 custom_colors/font_color = Color( 0.427451, 0.313726, 0.152941, 1 )
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 1 )
 text = "0"
 
 [node name="VSeparator" type="VSeparator" parent="CenterContainer/HBoxContainer"]
-margin_left = 60.0
-margin_right = 64.0
-margin_bottom = 11.0
+margin_left = 40.0
+margin_right = 44.0
+margin_bottom = 9.0
 
 [node name="LifeLabel" type="Label" parent="CenterContainer/HBoxContainer"]
-margin_left = 68.0
-margin_right = 99.0
-margin_bottom = 11.0
+margin_left = 48.0
+margin_right = 66.0
+margin_bottom = 9.0
 custom_colors/font_color = Color( 0.427451, 0.313726, 0.152941, 1 )
-custom_fonts/font = ExtResource( 4 )
-text = "Life:"
+custom_fonts/font = ExtResource( 1 )
+text = "LIFE:"
 
 [node name="LifeValue" type="Label" parent="CenterContainer/HBoxContainer"]
-margin_left = 103.0
-margin_right = 117.0
-margin_bottom = 11.0
+margin_left = 70.0
+margin_right = 78.0
+margin_bottom = 9.0
 custom_colors/font_color = Color( 0.427451, 0.313726, 0.152941, 1 )
-custom_fonts/font = ExtResource( 4 )
+custom_fonts/font = ExtResource( 1 )
 text = "20"
