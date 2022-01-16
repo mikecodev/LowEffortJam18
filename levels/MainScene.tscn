@@ -718,6 +718,14 @@ type = 4
 position = Vector2( 72, 12 )
 z_index = 9
 frames = SubResource( 33 )
+frame = 1
+playing = true
+
+[node name="Cook3" type="AnimatedSprite" parent="."]
+position = Vector2( 285, 69 )
+z_index = 9
+frames = SubResource( 33 )
+frame = 1
 playing = true
 
 [node name="Cook2" type="AnimatedSprite" parent="."]

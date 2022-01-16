@@ -44,8 +44,9 @@ func _ready():
 		set_physics_process(false)
 	update_skin()
 
-func play_bubble(status):
-	$Bubble.play_status(status)
+remotesync func play_bubble(status):
+	if Net.is_from_server():
+		$Bubble.play_status(status)
 
 func reset_allow_animation_change():
 	allow_animation_change = true

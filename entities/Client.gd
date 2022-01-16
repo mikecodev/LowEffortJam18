@@ -53,7 +53,7 @@ func _ready():
 	
 	ClientManager = get_node("/root/ClientManager")
 	MovableObj.move_to(Defs.ENTRY_POS)
-	MovableObj.play_bubble(Bubble.STATUS.empty)
+	MovableObj.rpc("play_bubble", Bubble.STATUS.empty)
 
 func AskForQueueSpace():
 	var QueueEntered = ClientManager.EnterQueue(self)
@@ -83,7 +83,7 @@ func WaitForFood():
 		TargetPizzaTopping = 1
 	else:
 		TargetPizzaTopping = 2
-	MovableObj.play_bubble(CurrentBubble)
+	MovableObj.rpc("play_bubble", CurrentBubble)
 	# TODO: Either choose a random food now or this should be done outside this class or in the ready
 	# TODO: ShowPizzaSign() Should show a bubble with the desired pizza
 func LeaveAndTip():
@@ -138,16 +138,16 @@ func MyPatienceIsGrowingSmaller():
 	Satisfaction = int(clamp(Satisfaction - Patience, 0, 100))
 	if Satisfaction < 50 and SatisfactionWarning == 0 or Satisfaction < 25 and SatisfactionWarning == 1:
 		SatisfactionWarning = SatisfactionWarning + 1
-		MovableObj.play_bubble(Bubble.STATUS.unhappy)
+		MovableObj.rpc("play_bubble", Bubble.STATUS.unhappy)
 		$ResetBubble.start()
 	# TODO: Add the pissed off probability here (among other places). It has to be very small!
 	if Satisfaction == 0:
 		Leave()
-		MovableObj.play_bubble(Bubble.STATUS.upset)
+		MovableObj.rpc("play_bubble", Bubble.STATUS.upset)
 		$PatienceTimer.stop()
 	# TODO: Also add an object and call it here to update the patience visual effect
 func OnResetBubble():
-	MovableObj.play_bubble(CurrentBubble)
+	MovableObj.rpc("play_bubble", CurrentBubble)
 
 func GetMovable():
 	return MovableObj
