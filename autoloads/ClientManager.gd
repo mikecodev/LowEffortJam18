@@ -9,16 +9,21 @@ var SPRITE_HEIGHT : int = 16
 var FreeTables : Array = []
 var QueuedClients : Array = []
 var SpawnTimer
+var CheckFreeTablesTimer
 
 func _ready():
 	set_process(false)
 	SpawnTimer = Timer.new()
+	CheckFreeTablesTimer = Timer.new()
+	
 	SpawnTimer.one_shot = true
 	add_child(SpawnTimer)
+	add_child(CheckFreeTablesTimer)
+	
 	SpawnTimer.connect("timeout", self, "OnClientSpawn")
+	CheckFreeTablesTimer.connect("timeout", self, "SendToTables")
 func AddTable(Table):
 	FreeTables.append(Table)
-	Table.connect("FreeTable", self, "OnFreeTable")
 func RemoveTable(Table):
 	var Pos = FreeTables.rfind(Table)
 	if(Pos != -1):
@@ -35,21 +40,26 @@ func EnterQueue(Client) -> bool:
 	return false
 	
 func ArrivedToQueueDestination():
+	SendToTables()
+	
+func SendToTables():
 	while(FreeTables.size() > 0 and QueuedClients.size() > 0 and QueuedClients[0].State == Client.STATE.Queuing):
 		var Table = FreeTables.pop_front()
 		# TODO: So far we have no groups, so we are just sitting random people together. This should change to customers arriving together
-		var NumClients = rand_range(1, QueuedClients.size())
+		# var NumClients = Defs.Rand.randi_range(1, QueuedClients.size())
+		var NumClients = 1
 		var ClientsToSit = []
 		for _n in range(NumClients):
 			ClientsToSit.append(QueuedClients.pop_front())
 		Table.Sit(ClientsToSit)
+		RepositionClients()
+		
+func RepositionClients():
 	# Reposition the remaining clients ahead
 	for Idx in range(0, QueuedClients.size()):
 		QueuedClients[Idx].Destination = Vector2(Defs.QUEUE_HEAD_POS.x, Defs.QUEUE_HEAD_POS.y + Idx * SPRITE_HEIGHT)
 		QueuedClients[Idx].AdvancePositionInQueue()
 
-func OnFreeTable(Table):
-	FreeTables.append(Table)
 func OnClientSpawn():
 	add_child(CLIENT_SCENE.instance())
 	SpawnTimer.wait_time = rand_range(Defs.MAX_SPAWN_TIME, Defs.MAX_SPAWN_TIME)

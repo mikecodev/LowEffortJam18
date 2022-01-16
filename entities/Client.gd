@@ -3,7 +3,7 @@ extends Node2D
 class_name Client
 
 signal LeaveTip(Money)
-signal ImLeaving(Player)
+signal ImLeaving()
 
 enum STATE {
 	Entering,
@@ -26,12 +26,12 @@ export var TargetPizzaSize = 0
 export var TargetPizzaTopping = 0
 
 var State = STATE.Entering;
-var Movable
+var MovableObj
 var ClientManager
 
 # tmp
 var Destination
-var LookAtDir = Vector2.DOWN
+var LookAtDir = Movable.LOOK.down
 
 # Output
 var Tip = 0.0
@@ -39,31 +39,30 @@ var Tip = 0.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_process(false)
-	var random = RandomNumberGenerator.new()
-	random.randomize()
-	var MovablePath = Net.register_person("NPC", Defs.SPAWN_POS, random.randi_range(1, 3))
-	Movable = get_node(MovablePath)
-	Movable.connect("path_done", self, "OnPositionArrival")
+	var MovablePath = Net.register_person("NPC", Defs.SPAWN_POS, Defs.Rand.randi_range(1, 3))
+	MovableObj = get_node(MovablePath)
+	MovableObj.connect("path_done", self, "OnPositionArrival")
 	$PatienceTimer.connect("timeout", self, "MyPatienceIsGrowingSmaller")
 	ClientManager = get_node("/root/ClientManager")
-	Movable.move_to(Defs.ENTRY_POS)
-	Movable.play_bubble(Bubble.STATUS.upset)
+	MovableObj.move_to(Defs.ENTRY_POS)
+	MovableObj.play_bubble(Bubble.STATUS.upset)
 
 func AskForQueueSpace():
 	var QueueEntered = ClientManager.EnterQueue(self)
 	if QueueEntered:
 		State = STATE.WalkingToQueue
-		Movable.move_to(Destination)
+		MovableObj.move_to(Destination)
 	else:
 		# TODO: Do we want pissed off clients that just enter the venue?
 		Leave()
 func WaitForATable():
 	State = STATE.Queuing
+	MovableObj.rpc("look_to", Movable.LOOK.up)
 	$PatienceTimer.start()
 	ClientManager.ArrivedToQueueDestination()
 func WaitForFood():
 	State = STATE.WaitingForFood
-	Movable.LookAtDir(LookAtDir)
+	MovableObj.rpc("look_to", LookAtDir)
 	
 	# TODO: Either choose a random food now or this should be done outside this class or in the ready
 	# TODO: ShowPizzaSign() Should show a bubble with the desired pizza
@@ -75,16 +74,16 @@ func LeaveAndTip():
 		printerr("Client Error: LeaveAndTip received but state wasn't finished eating. State = ", State)
 func Leave():
 	State = STATE.Leaving
-	Movable.move_to(Defs.EXIT_POS)
-	emit_signal("ImLeaving", self)
+	MovableObj.move_to(Defs.EXIT_POS)
+	emit_signal("ImLeaving")
 func ExitStore():
 	# TODO: Open the door, leave the store and QueueFree
-	Net.rpc("remove_entity", Movable.get_path()) # movable deletion must be broadcasted
+	Net.rpc("remove_entity", MovableObj.get_path()) # movable deletion must be broadcasted
 	queue_free() # Client exists in server only, dont need to broadcast deletion
 func OnFreeTable(_Destination : Vector2):
 	if State == STATE.Queuing:
 		State = STATE.WalkingToTable
-		Movable.move_to(_Destination)
+		MovableObj.move_to(_Destination)
 		return true
 	else:
 		printerr("Client Error: OnFreeTable received when the State wasn't queuing. State = ", State)
@@ -106,7 +105,7 @@ func OnPositionArrival():
 			printerr("Client Error: Unexpected OnPositionArrival received when state is ", State)
 
 func AdvancePositionInQueue():
-	Movable.move_to(Destination)
+	MovableObj.move_to(Destination)
 	
 func DeliverFood(PizzaTopping, PizzaSize):
 	if State == STATE.WaitingForFood:
@@ -124,4 +123,4 @@ func MyPatienceIsGrowingSmaller():
 	# TODO: Also add an object and call it here to update the patience visual effect
 
 func GetMovable():
-	return Movable
+	return MovableObj
