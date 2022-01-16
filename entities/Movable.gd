@@ -99,13 +99,9 @@ func move_along_path():
 	if debugpath:
 		debugpath.points = path
 	for _i in range(path.size()):
-		var x = path[0][0]
-		var y = path[0][1]
-		var px = int(x) - (int(x) % 16) + 8
-		var py = int(y) - (int(y) % 16) + 8
-		var distance_to_next := start_point.distance_to(Vector2(px, py))
+		var distance_to_next := start_point.distance_to(path[0])
 		if distance_to_next > 1:
-			v_buffer = (Vector2(px, py) - start_point).normalized() * speed
+			v_buffer = (path[0] - start_point).normalized() * speed
 			break
 		path.remove(0)
 	if path.size() == 0:
