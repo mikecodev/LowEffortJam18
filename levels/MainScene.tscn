@@ -610,5 +610,4 @@ playing = true
 position = Vector2( 56, 12 )
 z_index = 9
 frames = SubResource( 36 )
-frame = 1
 playing = true

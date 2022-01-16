@@ -19,7 +19,7 @@ enum STATUS {
 	Droped
 }
 
-var sprite: Sprite
+var sprite: AnimatedSprite
 export(TYPE) var type
 export(STATUS) var status
 
