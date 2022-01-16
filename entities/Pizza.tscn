@@ -205,7 +205,7 @@ animations = [ {
 } ]
 
 [node name="Pizza" type="Area2D"]
-z_index = 12
+z_index = 20
 collision_layer = 2
 collision_mask = 2
 script = ExtResource( 7 )
