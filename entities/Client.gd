@@ -79,6 +79,7 @@ func Leave():
 func ExitStore():
 	# TODO: Open the door, leave the store and QueueFree
 	Net.rpc("remove_entity", get_path())
+	Net.rpc("remove_entity", Movable.get_path())
 func OnFreeTable(_Destination : Vector2):
 	if State == STATE.Queuing:
 		State = STATE.WalkingToTable

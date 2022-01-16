@@ -519,7 +519,6 @@ visible = false
 position = Vector2( 0, -8 )
 frames = SubResource( 23 )
 animation = "right"
-frame = 2
 playing = true
 
 [node name="asNpc02" type="AnimatedSprite" parent="."]
@@ -527,6 +526,7 @@ visible = false
 position = Vector2( 0, -8 )
 frames = SubResource( 44 )
 animation = "right"
+frame = 1
 playing = true
 
 [node name="asNpc03" type="AnimatedSprite" parent="."]
