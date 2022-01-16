@@ -91,6 +91,7 @@ func register_pizza(type, pos: Vector2):
 			"type": type,
 			"body": pi
 		}
+		pi.name = pathname
 		pi.SetPizzaType(type)
 		world.add_child(pi)
 		pi.global_position = pos

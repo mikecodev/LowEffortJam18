@@ -164,7 +164,6 @@ func update_play(anim):
 		if pizza_carried:
 			anim += "_handsup"
 		animation = anim
-		print("animation: ", animation)
 		rpc("play", anim)
 		
 remotesync func play(anim):
