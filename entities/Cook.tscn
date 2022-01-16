@@ -38,5 +38,4 @@ shape = SubResource( 4 )
 
 [node name="Timer" type="Timer" parent="."]
 
-[connection signal="area_exited" from="Area2D" to="." method="next_pizza"]
 [connection signal="timeout" from="Timer" to="." method="check_orders"]

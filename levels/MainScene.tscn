@@ -722,6 +722,7 @@ material = SubResource( 44 )
 position = Vector2( 291, 61 )
 z_index = 20
 frames = SubResource( 43 )
+frame = 1
 playing = true
 
 [node name="Cook1" parent="." instance=ExtResource( 6 )]
