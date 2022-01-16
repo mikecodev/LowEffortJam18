@@ -533,6 +533,7 @@ tile_data = PoolIntArray( 1, 0, 0, 2, 2, 0, 3, 1, 0, 4, 1, 0, 5, 2, 0, 6, 2, 0, 
 visible = false
 
 [node name="DebugPath" type="Line2D" parent="."]
+visible = false
 points = PoolVector2Array( 130, 165 )
 width = 1.0
 

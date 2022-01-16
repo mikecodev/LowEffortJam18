@@ -16,6 +16,10 @@ func _ready():
 	$Transition.ShadeOut(4)
 
 func OnStartServer():
+	# DO NOT REMOVE
+	# This method needs to be called BEFORE node entering the tree, the _ready method
+	# and all the onready variables are called after entering into the tree, thus
+	# WORLD_SCENE global variable is null at this point
 	var WORLD_SCENE = preload("res://levels/MainScene.tscn")
 	var World = WORLD_SCENE.instance()
 	add_child(World)
