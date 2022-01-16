@@ -23,12 +23,11 @@ var sprite: AnimatedSprite
 export(TYPE) var type
 export(STATUS) var status
 
-func _ready():
-	var random = RandomNumberGenerator.new()
-	random.randomize()
-	$Timer.wait_time = random.randi_range(5, 10)
-	SetPizzaType(random.randi_range(0, 6))
-	status = STATUS.Ready
+func area_enabled(yes):
+	if yes:
+		collision_layer = 2
+	else: 
+		collision_layer = 0
 
 func SetPizzaType(type):
 	match type:
@@ -54,10 +53,3 @@ func SetPizzaType(type):
 	$VLarge.visible = false
 	$Beer.visible = false
 	sprite.visible = true
-
-func _on_Timer_timeout():
-	var random = RandomNumberGenerator.new()
-	random.randomize()
-	$Timer.wait_time = random.randi_range(5, 10)
-	if status == STATUS.Ready:
-		SetPizzaType(random.randi_range(0, 6))

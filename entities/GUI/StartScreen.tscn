@@ -47,7 +47,6 @@ __meta__ = {
 }
 
 [node name="Local" type="Tabs" parent="Menu"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -75,6 +74,7 @@ __meta__ = {
 }
 
 [node name="Online" type="Tabs" parent="Menu"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0

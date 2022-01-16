@@ -106,8 +106,8 @@ func broadcast_world():
 master func move_player(input_v: Vector2):
 	players[get_id()].body.move(input_v)
 
-master func skill_input(num: int, direction: Vector2):
-	players[get_id()].body.skill(num, direction)
+master func take_put():
+	players[get_id()].body.rpc("take_put")
 	
 master func world_ready():
 	broadcast_world()

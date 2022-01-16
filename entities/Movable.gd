@@ -30,6 +30,8 @@ var velocity: Vector2 = Vector2.ZERO
 var v_buffer: Vector2 = Vector2.ZERO
 var path: PoolVector2Array
 var skin = 0
+var looking_at = LOOK.down
+var pizza_carried
 onready var animated_sprite: AnimatedSprite = $asPlayer
 
 func _ready():
@@ -51,6 +53,25 @@ remotesync func play_bubble(status):
 func reset_allow_animation_change():
 	allow_animation_change = true
 
+remotesync func take_put():
+	if Net.is_from_server():
+		if pizza_carried:
+			remove_child(pizza_carried)
+			get_parent().add_child(pizza_carried)
+			pizza_carried.area_enabled(true)
+			pizza_carried.global_position = global_position
+			pizza_carried = null
+		else:
+			var pizzas = $ActionArea.get_overlapping_areas()
+			if pizzas.size() == 0:
+				return
+			var pizza = pizzas[0]
+			pizza.get_parent().remove_child(pizza)
+			add_child(pizza)
+			pizza.area_enabled(false)
+			pizza.position = Vector2.ZERO
+			pizza_carried = pizza
+	
 remotesync func look_to(name):
 	if Net.is_from_server():
 		match name:
@@ -139,6 +160,19 @@ func update_play(anim):
 remotesync func play(anim):
 	if Net.is_from_server():
 		animated_sprite.play(anim)
+		match anim:
+			"idledown": continue
+			"down":
+				looking_at = LOOK.down
+			"idleup": continue
+			"up":
+				looking_at = LOOK.up
+			"idleleft": continue
+			"left":
+				looking_at = LOOK.left
+			"idleright": continue
+			"right":
+				looking_at = LOOK.right
 
 puppet func puppet_move(origin):
 	if Net.is_from_server():
