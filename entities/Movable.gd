@@ -56,8 +56,6 @@ func reset_allow_animation_change():
 remotesync func take_put():
 	if Net.is_from_server():
 		if pizza_carried:
-			remove_child(pizza_carried)
-			get_parent().add_child(pizza_carried)
 			pizza_carried.area_enabled(true)
 			var g = global_position
 			match looking_at:
@@ -75,10 +73,7 @@ remotesync func take_put():
 			if pizzas.size() == 0:
 				return
 			var pizza = pizzas[0]
-			pizza.get_parent().remove_child(pizza)
-			add_child(pizza)
 			pizza.area_enabled(false)
-			pizza.position = Vector2(0, -20)
 			pizza_carried = pizza
 	
 remotesync func look_to(name):
@@ -128,6 +123,9 @@ func _physics_process(delta):
 	rpc_unreliable("puppet_move", transform.origin)
 	if v_buffer != Vector2.ZERO:
 		v_buffer = Vector2.ZERO
+		
+	if pizza_carried:
+		pizza_carried.global_position = Vector2(global_position.x, global_position.y-20)
 
 func move(direction):
 	if is_network_master():

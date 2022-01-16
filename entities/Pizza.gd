@@ -10,6 +10,13 @@ func area_enabled(yes):
 	else: 
 		collision_layer = 0
 
+func _physics_process(_delta):
+	if is_network_master():
+		rpc_unreliable("update_pos", global_position)
+
+puppet func update_pos(pos):
+	global_position = pos
+
 func SetPizzaType(type):
 	match type:
 		Bubble.STATUS.pepperoni_pizza_small:

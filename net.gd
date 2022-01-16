@@ -8,7 +8,9 @@ const PLAYER_SPAWN = Vector2(70, 70)
 
 const c_person = preload("res://entities/Movable.tscn")
 const c_world = preload("res://levels/MainScene.tscn")
+const c_pizza = preload("res://entities/Pizza.tscn")
 var players = {}
+var pizzas = {}
 var world: Node2D
 
 var is_local = false
@@ -79,6 +81,21 @@ master func register_player(name):
 	register_person(name, PLAYER_SPAWN, 0, id)
 	rpc_id(id, "load_world")
 	
+func register_pizza(type, pos: Vector2):
+	if is_network_master():
+		var pi = c_pizza.instance()
+		var id = pi.get_instance_id()
+		var pathname = "Pizza"+str(id)
+		pizzas[id] = {
+			"pathname": pathname,
+			"type": type,
+			"body": pi
+		}
+		pi.SetPizzaType(type)
+		world.add_child(pi)
+		pi.global_position = pos
+		broadcast_world()
+	
 func register_person(name, pos = Vector2(5, 5), skin = 0, id = 0):
 	if is_network_master():
 		var pi = c_person.instance()
@@ -86,10 +103,10 @@ func register_person(name, pos = Vector2(5, 5), skin = 0, id = 0):
 			id = pi.get_instance_id()
 		var pathname = "NPC"+str(id)
 		players[id] = {
-			name = name,
-			body = pi,
-			pathname = pathname,
-			skin = skin
+			"name": name,
+			"body": pi,
+			"pathname": pathname,
+			"skin": skin
 		}
 		pi.name = pathname
 		pi.global_position = pos
@@ -102,6 +119,9 @@ func broadcast_world():
 	for pid in players:
 		var p = players[pid]
 		rpc("instance_person", p.pathname, p.body.global_position, p.skin)
+	for pizid in pizzas:
+		var pizza = pizzas[pizid]
+		rpc("instance_pizza", pizza.pathname, pizza.body.global_position, pizza.type)
 	
 master func move_player(input_v: Vector2):
 	players[get_id()].body.move(input_v)
@@ -128,6 +148,16 @@ remotesync func instance_person(pathname, position: Vector2, skin):
 			pi.name = pathname
 			pi.global_position = position
 			pi.skin = skin
+			world.add_child(pi)
+			
+remotesync func instance_pizza(pathname, position: Vector2, type):
+	if is_local or is_network_master(): return
+	if is_from_server() and world:
+		if not world.get_node(pathname):
+			var pi = c_pizza.instance()
+			pi.name = pathname
+			pi.global_position = position
+			pi.SetPizzaType(type)
 			world.add_child(pi)
 		
 remotesync func remove_entity(pathname: String):
