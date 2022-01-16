@@ -13,6 +13,7 @@ var Tip = 0
 
 func _ready():
 	set_process(false)
+	ClientManager.AddTable(self)
 
 func Sit(ClientsToSit):
 	SittingClients = ClientsToSit

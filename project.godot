@@ -18,16 +18,10 @@ _global_script_classes=[ {
 "class": "Client",
 "language": "GDScript",
 "path": "res://entities/Client.gd"
-}, {
-"base": "KinematicBody2D",
-"class": "Movable",
-"language": "GDScript",
-"path": "res://entities/Movable.gd"
 } ]
 _global_script_class_icons={
 "Bubble": "",
-"Client": "",
-"Movable": ""
+"Client": ""
 }
 
 [application]
