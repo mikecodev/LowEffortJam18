@@ -33,6 +33,7 @@ var path: PoolVector2Array
 var skin = 0
 var looking_at = LOOK.down
 var pizza_carried
+var bubble_status
 onready var animated_sprite: AnimatedSprite = $asPlayer
 
 func _ready():
@@ -49,6 +50,7 @@ func _ready():
 
 remotesync func play_bubble(status):
 	if Net.is_from_server():
+		bubble_status = status
 		$Bubble.play_status(status)
 
 func reset_allow_animation_change():

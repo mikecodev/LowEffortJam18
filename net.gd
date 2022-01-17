@@ -119,7 +119,7 @@ func register_person(name, pos = Vector2(5, 5), skin = 0, id = 0):
 func broadcast_world():
 	for pid in players:
 		var p = players[pid]
-		rpc("instance_person", p.pathname, p.body.global_position, p.skin)
+		rpc("instance_person", p.pathname, p.body.global_position, p.skin, p.body.bubble_status)
 	for pizid in pizzas:
 		var pizza = pizzas[pizid]
 		rpc("instance_pizza", pizza.pathname, pizza.body.global_position, pizza.type)
@@ -141,7 +141,7 @@ remotesync func load_world():
 	if is_from_server():
 		emit_signal("StartOnline")
 
-remotesync func instance_person(pathname, position: Vector2, skin):
+remotesync func instance_person(pathname, position: Vector2, skin, bubble_status):
 	if is_local or is_network_master(): return
 	if is_from_server() and world:
 		if not world.get_node(pathname):
@@ -149,6 +149,7 @@ remotesync func instance_person(pathname, position: Vector2, skin):
 			pi.name = pathname
 			pi.global_position = position
 			pi.skin = skin
+			pi.play_bubble(bubble_status)
 			world.add_child(pi)
 			
 remotesync func instance_pizza(pathname, position: Vector2, type):

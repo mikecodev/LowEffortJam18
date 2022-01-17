@@ -15,10 +15,11 @@ func area_enabled(yes):
 
 func _physics_process(_delta):
 	if is_network_master():
-		rpc_unreliable("update_pos", global_position)
+		rpc_unreliable("update_pos", global_position, sprite.frame)
 
-puppet func update_pos(pos):
+puppet func update_pos(pos, frame):
 	global_position = pos
+	sprite.frame = frame
 
 func SetPizzaType(type):
 	match type:
