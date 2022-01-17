@@ -169,13 +169,14 @@ func freeze(time: float):
 		freezed = false
 
 func update_play(anim):
-	if animation != anim && allow_animation_change:
-		allow_animation_change = false
-		allow_animation_change_timer.start()
-		if pizza_carried:
-			anim += "_handsup"
-		animation = anim
-		rpc("play", anim)
+	if is_network_master():
+		if animation != anim && allow_animation_change:
+			allow_animation_change = false
+			allow_animation_change_timer.start()
+			if pizza_carried:
+				anim += "_handsup"
+			animation = anim
+			rpc("play", anim)
 		
 remotesync func play(anim):
 	if Net.is_from_server():
