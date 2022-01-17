@@ -234,11 +234,11 @@ func update_skin():
 func _on_pizza_near(area):
 	if is_network_master():
 		emit_signal("got_pizza", area)
-		if area.has_method("area_enabled"):
-			area.area_enabled(false)
 		print(TYPE.keys()[skin], " got_pizza ", Bubble.STATUS.keys()[area.pizza_type])
 
 func take_pizza(pizza_body):
+	if pizza_body.has_method("area_enabled"):
+		pizza_body.area_enabled(false)
 	$Tween.interpolate_property(pizza_body, "global_position",
 		pizza_body.global_position, put_pos(), 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()
