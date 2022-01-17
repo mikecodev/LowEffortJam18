@@ -26,6 +26,7 @@ func _ready():
 	
 	SpawnTimer.connect("timeout", self, "OnClientSpawn")
 	CheckFreeTablesTimer.connect("timeout", self, "SendToTables")
+	CheckFreeTablesTimer.start()
 func AddTable(Table):
 	FreeTables.append(Table)
 func RemoveTable(Table):
@@ -71,16 +72,16 @@ func RepositionClients():
 		QueuedClients[Idx].AdvancePositionInQueue()
 
 func OnClientSpawn():
-	var _GroupSize = Defs.Rand.randi_range(1, 4)
+	var GroupSize = Defs.Rand.randi_range(1, 4)
 	var ClientGroup = ClientGroups.pop_front()
-	for _ClientIdx in range(0, 3): #GroupSize):
+	for _ClientIdx in range(0, GroupSize):
 		var Client = CLIENT_SCENE.instance()
 		if _ClientIdx == 0:
 			Client.Lider = true
 		Client.add_to_group(ClientGroup)
 		Client.set_meta("GroupIdx", ClientGroup)
 		add_child(Client)
-	SpawnTimer.wait_time = rand_range(Defs.MAX_SPAWN_TIME, Defs.MAX_SPAWN_TIME)
+	SpawnTimer.wait_time = rand_range(Defs.MIN_SPAWN_TIME, Defs.MAX_SPAWN_TIME)
 	SpawnTimer.start()
 func Start():
 	if is_network_master():
