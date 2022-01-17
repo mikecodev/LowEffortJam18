@@ -86,7 +86,6 @@ func WaitForFood():
 func LeaveAndTip():
 	if State == STATE.FinishedEating:
 		emit_signal("LeaveTip", Tip)
-		Leave()
 	else:
 		printerr("Client Error: LeaveAndTip received but state wasn't finished eating. State = ", State)
 func Leave():
@@ -103,7 +102,6 @@ func OnFreeTable(_Destination : Vector2):
 		MovableObj.move_to(_Destination)
 		return true
 	else:
-		printerr("Client Error: OnFreeTable received when the State wasn't queuing. State = ", State)
 		return false
 func OnPositionArrival():
 	match State:

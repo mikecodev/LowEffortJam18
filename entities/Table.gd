@@ -30,6 +30,7 @@ func OnNpcSatisfied(NpcTip):
 	Tip += NpcTip
 	ClientsEating -= 1
 	if(ClientsEating == 0):
+		print("Clients leaving: ", ClientsEating)
 		FreeTable()
 func OnClientLeavingEarly(_Client):
 	# TODO: DECREASE LIFES?
