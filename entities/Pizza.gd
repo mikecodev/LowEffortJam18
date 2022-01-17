@@ -36,5 +36,7 @@ func SetPizzaType(type):
 func Consume():
 	if sprite != null:
 		sprite.playing = true
-		yield(get_tree().create_timer(2), "timeout")
-		queue_free()
+
+func FreePizza():
+	queue_free()
+
