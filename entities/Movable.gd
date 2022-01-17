@@ -16,7 +16,7 @@ enum LOOK {
 	up, down, left, right
 }
 
-export var speed = 230
+export var speed = 150
 export var friction = 0.01
 export var acceleration = 0.1
 
@@ -225,7 +225,7 @@ func update_skin():
 	match skin:
 		TYPE.Player:
 			animated_sprite = $asPlayer
-			speed = 230
+			speed = 222
 		TYPE.Npc01:
 			animated_sprite = $asNpc01
 		TYPE.Npc02:
