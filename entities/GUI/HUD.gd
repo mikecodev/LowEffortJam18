@@ -1,19 +1,12 @@
 extends PanelContainer
 
-signal GameFinished(Points)
-
-var Points = 0
-var Life = 20
-
 func _ready():
 	set_process(false)
+	Defs.connect("TipsUpdated", self, "OnTipsUpdated")
+	Defs.connect("LifesUpdated", self, "OnUpdatedLife")
 
-func UpdatePoints(Diff):
-	Points = clamp(Points - Diff, 0, 5000)
-	$HBoxContainer/PointsValue.text = Points
+func OnUpdatedLife(NewVal):
+	$CenterContainer/HBoxContainer/LifeValue.text = str(NewVal)
 
-func UpdateLife(Diff):
-	Life = clamp(Life - Diff, 0, 20)
-	$HBoxContainer/LifeValue.text = Life
-	if(Life == 0):
-		emit_signal("GameFinished", Points)
+func OnTipsUpdated(NewVal):
+	$CenterContainer/HBoxContainer/PointsValue.text = str(NewVal)

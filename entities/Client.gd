@@ -85,7 +85,7 @@ func WaitForFood():
 	# TODO: ShowPizzaSign() Should show a bubble with the desired pizza
 func LeaveAndTip():
 	if State == STATE.FinishedEating:
-		emit_signal("LeaveTip", Tip)
+		emit_signal("LeaveTip", int(Tip/10))
 	else:
 		printerr("Client Error: LeaveAndTip received but state wasn't finished eating. State = ", State)
 func Leave():

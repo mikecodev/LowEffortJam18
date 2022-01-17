@@ -1,13 +1,12 @@
 extends StaticBody2D
 
-signal AddPoints(Points)
-
 onready var Seats		= [$PosUp.position, $PosDown.position, $PosLeft.position, $PosRight.position]
 onready var Orientation	= [Movable.LOOK.down, Movable.LOOK.up, Movable.LOOK.right, Movable.LOOK.left]
 
 var SittingClients = []
 var ClientsEating = 0
 var Tip = 0
+var Penalty = 0
 
 func _ready():
 	set_process(false)
@@ -32,14 +31,16 @@ func OnNpcSatisfied(NpcTip):
 	if(ClientsEating == 0):
 		FreeTable()
 func OnClientLeavingEarly(_Client):
-	# TODO: DECREASE LIFES?
+	Penalty += 1
 	ClientsEating -= 1
 	if ClientsEating == 0:
 		FreeTable()
 	
 func FreeTable():
-	emit_signal("AddPoints", Tip)
+	Defs.Lifes -= Penalty
+	Defs.Tips += Tip
 	Tip = 0
+	Penalty = 0
 	ClientsEating = 0
 	var GroupIdx = SittingClients[0].get_meta("GroupIdx")
 	for Client in SittingClients:
