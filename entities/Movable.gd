@@ -73,13 +73,13 @@ func put_pos():
 	var g = global_position
 	match looking_at:
 		LOOK.left:
-			return Vector2(g.x-15, g.y-10)
+			return Vector2(g.x-10, g.y-10)
 		LOOK.right:
-			return Vector2(g.x+15, g.y-10)
+			return Vector2(g.x+10, g.y-10)
 		LOOK.up:
-			return Vector2(g.x, g.y-25)
+			return Vector2(g.x, g.y-20)
 		LOOK.down:
-			return Vector2(g.x, g.y+15)
+			return Vector2(g.x, g.y+10)
 	
 remotesync func look_to(name):
 	if Net.is_from_server():
