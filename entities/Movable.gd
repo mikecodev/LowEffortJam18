@@ -236,7 +236,7 @@ func update_skin():
 func _on_pizza_near(area):
 	if is_network_master():
 		emit_signal("got_pizza", area)
-		print(TYPE.keys()[skin], " got_pizza ", Bubble.STATUS.keys()[area.pizza_type])
+		# print(TYPE.keys()[skin], " got_pizza ", Bubble.STATUS.keys()[area.pizza_type])
 
 func take_pizza(pizza_body):
 	if pizza_body.has_method("area_enabled"):

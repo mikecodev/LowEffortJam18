@@ -86,7 +86,6 @@ func WaitForFood():
 func LeaveAndTip():
 	if State == STATE.FinishedEating:
 		emit_signal("LeaveTip", Tip)
-		Leave()
 	else:
 		printerr("Client Error: LeaveAndTip received but state wasn't finished eating. State = ", State)
 func Leave():
@@ -103,7 +102,6 @@ func OnFreeTable(_Destination : Vector2):
 		MovableObj.move_to(_Destination)
 		return true
 	else:
-		printerr("Client Error: OnFreeTable received when the State wasn't queuing. State = ", State)
 		return false
 func OnPositionArrival():
 	match State:
@@ -136,13 +134,14 @@ func DeliverFood(DeliveredPizza):
 			State = STATE.Eating
 			Tip = Satisfaction
 			MovableObj.play_bubble(Bubble.STATUS.happy)
-	else:
-		printerr("Client Error: DeliverFood received but the client wasn't waiting for food. The State was: ", State)
 func MyPatienceIsGrowingSmaller():
 	Satisfaction = int(clamp(Satisfaction - Patience, 0, 100))
 	if Satisfaction < 50 and SatisfactionWarning == 0 or Satisfaction < 25 and SatisfactionWarning == 1:
+		if SatisfactionWarning == 0:
+			MovableObj.rpc("play_bubble", Bubble.STATUS.disappointed)
+		else:
+			MovableObj.rpc("play_bubble", Bubble.STATUS.unhappy)
 		SatisfactionWarning = SatisfactionWarning + 1
-		MovableObj.rpc("play_bubble", Bubble.STATUS.unhappy)
 		$ResetBubble.start()
 	# TODO: Add the pissed off probability here (among other places). It has to be very small!
 	if Satisfaction == 0:

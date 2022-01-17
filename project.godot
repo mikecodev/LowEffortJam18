@@ -127,6 +127,11 @@ take_put={
  ]
 }
 
+[layer_names]
+
+2d_render/layer_2="Pizza"
+2d_render/layer_3="Movable"
+
 [physics]
 
 common/enable_pause_aware_picking=true

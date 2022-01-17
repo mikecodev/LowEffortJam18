@@ -47,6 +47,5 @@ func FreeTable():
 		Client.Leave()
 	SittingClients = []
 	ClientManager.AddTable(self)
-	print("Leaving table ", get_name())
 
 
