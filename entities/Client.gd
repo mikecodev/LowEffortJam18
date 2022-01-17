@@ -133,7 +133,7 @@ func DeliverFood(DeliveredPizza):
 			DeliveredPizza.Consume()
 			State = STATE.Eating
 			Tip = Satisfaction
-			MovableObj.play_bubble(Bubble.STATUS.happy)
+			MovableObj.rpc("play_bubble", Bubble.STATUS.happy)
 func MyPatienceIsGrowingSmaller():
 	Satisfaction = int(clamp(Satisfaction - Patience, 0, 100))
 	if Satisfaction < 50 and SatisfactionWarning == 0 or Satisfaction < 25 and SatisfactionWarning == 1:

@@ -631,7 +631,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CircleShape2D" id=128]
-radius = 22.0
+radius = 27.0185
 
 [node name="Movable" type="KinematicBody2D"]
 z_index = 12

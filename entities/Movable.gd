@@ -16,7 +16,7 @@ enum LOOK {
 	up, down, left, right
 }
 
-export var speed = 250
+export var speed = 230
 export var friction = 0.01
 export var acceleration = 0.1
 
