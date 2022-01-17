@@ -20,7 +20,6 @@ var Lifes = 20 setget SetLifes
 
 # Update speed and reset the rotation.
 func SetTips(NewVal):
-	print(NewVal)
 	emit_signal("TipsUpdated", NewVal)
 
 func SetLifes(NewVal):

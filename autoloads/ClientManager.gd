@@ -14,9 +14,10 @@ var CheckFreeTablesTimer
 var ClientGroups = []
 
 func _ready():
+	set_process(false)
 	for Group in range(0, 30):
 		ClientGroups.append("ClientGroup" + str(Group))
-	set_process(false)
+	Defs.connect("GameFinished", self, "OnGameFinished")
 	SpawnTimer = Timer.new()
 	CheckFreeTablesTimer = Timer.new()
 	
@@ -93,3 +94,10 @@ func OnPlayerLeaving(Client):
 			QueuedClients[i].Destination = Vector2(Defs.QUEUE_HEAD_POS.x, Defs.QUEUE_HEAD_POS.y + i*SPRITE_HEIGHT)
 			QueuedClients[i].AdvancePositionInQueue()
 		QueuedClients.erase(QueuedClients[Idx])
+
+func OnGameFinished(Tips):
+	SpawnTimer.stop()
+	CheckFreeTablesTimer.stop()
+	print("Game finished ", Tips)
+	get_tree().call_group("ClientGroupMaster", "StopProcessing")
+	

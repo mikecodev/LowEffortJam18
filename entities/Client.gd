@@ -14,7 +14,8 @@ enum STATE {
 	Eating,
 	FinishedEating,
 	PissedOff,
-	Leaving
+	Leaving,
+	EndGame
 }
 
 
@@ -46,6 +47,8 @@ var Tip = 0.0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	set_process(false)
+	add_to_group("ClientGroupMaster")
+
 	var MovablePath = Net.register_person("NPC", Defs.SPAWN_POS, Defs.Rand.randi_range(1, 3))
 	MovableObj = get_node(MovablePath)
 	MovableObj.connect("path_done", self, "OnPositionArrival")
@@ -116,6 +119,8 @@ func OnPositionArrival():
 		STATE.Queuing:
 			# Sometimes if somebody leaves the queue we move a step forward. Do nothing
 			pass
+		STATE.EndGame:
+			Leave()
 		_:
 			printerr("Client Error: Unexpected OnPositionArrival received when state is ", State)
 
@@ -175,3 +180,6 @@ func OnFinishedEating(Pizza):
 	Pizza.disconnect("PizzaEaten", self, "OnFinishedEating")
 	State = STATE.FinishedEating
 	LeaveAndTip()
+
+func StopProcessing():
+	State = STATE.EndGame
