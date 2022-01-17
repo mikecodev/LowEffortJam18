@@ -22,4 +22,6 @@ func _ready():
 
 
 func play_status(status):
+	if not status:
+		status = STATUS.empty
 	play(STATUS.keys()[status])
