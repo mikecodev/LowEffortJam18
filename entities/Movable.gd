@@ -58,16 +58,8 @@ remotesync func take_put():
 	if Net.is_from_server():
 		if pizza_carried:
 			pizza_carried.area_enabled(true)
-			var g = global_position
-			match looking_at:
-				LOOK.left:
-					pizza_carried.global_position = Vector2(g.x-15, g.y-10)
-				LOOK.right:
-					pizza_carried.global_position = Vector2(g.x+15, g.y-10)
-				LOOK.up:
-					pizza_carried.global_position = Vector2(g.x, g.y-25)
-				LOOK.down:
-					pizza_carried.global_position =Vector2(g.x, g.y+15)
+			var pos = put_pos()
+			pizza_carried.global_position = pos
 			pizza_carried = null
 		else:
 			var pizzas = $ActionArea.get_overlapping_areas()
@@ -76,6 +68,18 @@ remotesync func take_put():
 			var pizza = pizzas[0]
 			pizza.area_enabled(false)
 			pizza_carried = pizza
+	
+func put_pos():
+	var g = global_position
+	match looking_at:
+		LOOK.left:
+			return Vector2(g.x-15, g.y-10)
+		LOOK.right:
+			return Vector2(g.x+15, g.y-10)
+		LOOK.up:
+			return Vector2(g.x, g.y-25)
+		LOOK.down:
+			return Vector2(g.x, g.y+15)
 	
 remotesync func look_to(name):
 	if Net.is_from_server():
@@ -225,5 +229,10 @@ func update_skin():
 
 func _on_pizza_near(area):
 	if is_network_master():
-		emit_signal("got_pizza", area.pizza_type)
+		emit_signal("got_pizza", area)
 		print(TYPE.keys()[skin], " got_pizza ", Bubble.STATUS.keys()[area.pizza_type])
+
+func take_pizza(pizza_body):
+	$Tween.interpolate_property(pizza_body, "global_position",
+		pizza_body.global_position, put_pos(), 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
