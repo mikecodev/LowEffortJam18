@@ -11,7 +11,11 @@ var QueuedClients : Array = []
 var SpawnTimer
 var CheckFreeTablesTimer
 
+var ClientGroups = []
+
 func _ready():
+	for Group in range(0, 30):
+		ClientGroups.append("ClientGroup" + str(Group))
 	set_process(false)
 	SpawnTimer = Timer.new()
 	CheckFreeTablesTimer = Timer.new()
@@ -31,11 +35,14 @@ func RemoveTable(Table):
 	return Pos
 # TODO: Perhaps get groups of people linked together when arriving, so instead of a client we receive a list of clients?
 func EnterQueue(Client) -> bool:
-	if QueuedClients.size() < QUEUE_SIZE:
-		QueuedClients.push_back(Client)
-		# El jodido vector2 no se pasa por referencia
-		Client.Destination = Vector2(Defs.QUEUE_HEAD_POS.x, Defs.QUEUE_HEAD_POS.y + (QueuedClients.size()-1)*SPRITE_HEIGHT)
-		Client.connect("ImLeaving", self, "OnPlayerLeaving")
+	print("Client group", Client.get_meta("GroupIdx"))
+	var NewClients = get_tree().get_nodes_in_group(Client.get_meta("GroupIdx"))
+	if QueuedClients.size() + NewClients.size() < QUEUE_SIZE:
+		for NewClient in NewClients:
+			QueuedClients.push_back(NewClient)
+			# El jodido vector2 no se pasa por referencia
+			NewClient.Destination = Vector2(Defs.QUEUE_HEAD_POS.x, Defs.QUEUE_HEAD_POS.y + (QueuedClients.size()-1)*SPRITE_HEIGHT)
+			NewClient.connect("ImLeaving", self, "OnPlayerLeaving")
 		return true
 	return false
 	
@@ -47,9 +54,13 @@ func SendToTables():
 		var Table = FreeTables.pop_front()
 		# TODO: So far we have no groups, so we are just sitting random people together. This should change to customers arriving together
 		# var NumClients = Defs.Rand.randi_range(1, QueuedClients.size())
-		var NumClients = 1
 		var ClientsToSit = []
-		for _n in range(NumClients):
+		var Client = QueuedClients.pop_front()
+		var GroupIdx = Client.get_meta("GroupIdx")
+		
+		# Adding the leader first
+		ClientsToSit.append(Client)
+		while(QueuedClients.size() > 0 and QueuedClients[0].get_meta("GroupIdx") == GroupIdx):
 			ClientsToSit.append(QueuedClients.pop_front())
 		Table.Sit(ClientsToSit)
 		RepositionClients()
@@ -61,7 +72,15 @@ func RepositionClients():
 		QueuedClients[Idx].AdvancePositionInQueue()
 
 func OnClientSpawn():
-	add_child(CLIENT_SCENE.instance())
+	var _GroupSize = Defs.Rand.randi_range(1, 4)
+	var ClientGroup = ClientGroups.pop_front()
+	for _ClientIdx in range(0, 3): #GroupSize):
+		var Client = CLIENT_SCENE.instance()
+		if _ClientIdx == 0:
+			Client.Lider = true
+		Client.add_to_group(ClientGroup)
+		Client.set_meta("GroupIdx", ClientGroup)
+		add_child(Client)
 	SpawnTimer.wait_time = rand_range(Defs.MAX_SPAWN_TIME, Defs.MAX_SPAWN_TIME)
 	SpawnTimer.start()
 func Start():
@@ -73,6 +92,4 @@ func OnPlayerLeaving(Client):
 		for i in range(Idx+1, QueuedClients.size()):
 			QueuedClients[i].Destination = Vector2(Defs.QUEUE_HEAD_POS.x, Defs.QUEUE_HEAD_POS.y + i*SPRITE_HEIGHT)
 			QueuedClients[i].AdvancePositionInQueue()
-		print(QueuedClients)
 		QueuedClients.erase(QueuedClients[Idx])
-		print(QueuedClients)

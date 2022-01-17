@@ -33,6 +33,7 @@ export var TargetPizzaTopping = 0
 var State = STATE.Entering;
 var MovableObj
 var ClientManager
+var Lider = false
 
 # tmp
 var Destination
@@ -48,21 +49,24 @@ func _ready():
 	var MovablePath = Net.register_person("NPC", Defs.SPAWN_POS, Defs.Rand.randi_range(1, 3))
 	MovableObj = get_node(MovablePath)
 	MovableObj.connect("path_done", self, "OnPositionArrival")
+	MovableObj.connect("got_pizza", self, "DeliverFood")
 	$PatienceTimer.connect("timeout", self, "MyPatienceIsGrowingSmaller")
 	$ResetBubble.connect("timeout", self, "OnResetBubble")
 	
 	ClientManager = get_node("/root/ClientManager")
 	MovableObj.move_to(Defs.ENTRY_POS)
 	MovableObj.rpc("play_bubble", Bubble.STATUS.empty)
-
+func MoveToQueue():
+	State = STATE.WalkingToQueue
+	MovableObj.move_to(Destination)
 func AskForQueueSpace():
-	var QueueEntered = ClientManager.EnterQueue(self)
-	if QueueEntered:
-		State = STATE.WalkingToQueue
-		MovableObj.move_to(Destination)
-	else:
-		# TODO: Do we want pissed off clients that just enter the venue?
-		Leave()
+	if Lider:
+		var QueueEntered = ClientManager.EnterQueue(self)
+		if QueueEntered:
+			get_tree().call_group(get_meta("GroupIdx"), "MoveToQueue")
+		else:
+			# TODO: Do we want pissed off clients that just enter the venue?
+			get_tree().call_group(get_meta("GroupIdx"), "Leave")
 func WaitForATable():
 	State = STATE.Queuing
 	MovableObj.rpc("look_to", Movable.LOOK.up)
@@ -71,18 +75,10 @@ func WaitForATable():
 func WaitForFood():
 	State = STATE.WaitingForFood
 	MovableObj.rpc("look_to", LookAtDir)
-	CurrentBubble = FOOD_CHOICES[Defs.Rand.randi_range(0, FOOD_CHOICES.size())]
-	 
-	if CurrentBubble in [Bubble.STATUS.pepperoni_pizza_large, Bubble.STATUS.veggie_pizza_large]:
-		TargetPizzaSize = 1
-	else:
-		TargetPizzaSize = 0
-	if CurrentBubble in [Bubble.STATUS.veggie_pizza_small, Bubble.STATUS.veggie_pizza_large]:
-		TargetPizzaTopping = 0
-	elif CurrentBubble in [Bubble.STATUS.pepperoni_pizza_small, Bubble.STATUS.pepperoni_pizza_large]:
-		TargetPizzaTopping = 1
-	else:
-		TargetPizzaTopping = 2
+	CurrentBubble = FOOD_CHOICES[Defs.Rand.randi_range(0, FOOD_CHOICES.size()-1)]
+	var SizeTopping = GetSizeAndTopping(CurrentBubble)
+	TargetPizzaSize = SizeTopping[0]
+	TargetPizzaTopping = SizeTopping[1]
 	MovableObj.rpc("play_bubble", CurrentBubble)
 	Defs.orders.append(CurrentBubble)
 	# TODO: Either choose a random food now or this should be done outside this class or in the ready
@@ -128,11 +124,18 @@ func OnPositionArrival():
 func AdvancePositionInQueue():
 	MovableObj.move_to(Destination)
 	
-func DeliverFood(PizzaTopping, PizzaSize):
+func DeliverFood(DeliveredPizza):
 	if State == STATE.WaitingForFood:
-		State = STATE.FinishedEating
-		Tip = (((PizzaTopping == TargetPizzaTopping) + (PizzaSize == TargetPizzaSize))*0.5)*Satisfaction
-		# TODO: Penalty? Also when the customers decides to leave (check the timer)
+		var SizeTopping = GetSizeAndTopping(DeliveredPizza.pizza_type)
+		var RightOrder = TargetPizzaTopping == SizeTopping[1] and TargetPizzaSize == SizeTopping[0]
+		if(RightOrder):
+			$PatienceTimer.stop()
+			DeliveredPizza.connect("PizzaEaten", self, "OnFinishedEating")
+			MovableObj.take_pizza(DeliveredPizza)
+			DeliveredPizza.Consume()
+			State = STATE.Eating
+			Tip = Satisfaction
+			MovableObj.play_bubble(Bubble.STATUS.happy)
 	else:
 		printerr("Client Error: DeliverFood received but the client wasn't waiting for food. The State was: ", State)
 func MyPatienceIsGrowingSmaller():
@@ -152,3 +155,24 @@ func OnResetBubble():
 
 func GetMovable():
 	return MovableObj
+func GetSizeAndTopping(PizzaType):
+	# Size 0, Topping 1
+	var Output = [0,0]
+	if PizzaType in [Bubble.STATUS.pepperoni_pizza_small, Bubble.STATUS.veggie_pizza_small]:
+		Output[0] = 0
+	elif PizzaType in [Bubble.STATUS.pepperoni_pizza_large, Bubble.STATUS.veggie_pizza_large]:
+		Output[0] = 1
+	else:
+		Output[0] = 2
+	if CurrentBubble in [Bubble.STATUS.veggie_pizza_small, Bubble.STATUS.veggie_pizza_large]:
+		Output[1] = 0
+	elif CurrentBubble in [Bubble.STATUS.pepperoni_pizza_small, Bubble.STATUS.pepperoni_pizza_large]:
+		Output[1] = 1
+	else:
+		Output[1] = 2
+	return Output
+
+func OnFinishedEating(Pizza):
+	Pizza.disconnect("PizzaEaten", self, "OnFinishedEating")
+	State = STATE.FinishedEating
+	LeaveAndTip()
