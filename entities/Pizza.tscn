@@ -240,7 +240,6 @@ frames = SubResource( 37 )
 [node name="Beer" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 42 )
-frame = 3
 
 [connection signal="animation_finished" from="PSmall" to="." method="FreePizza"]
 [connection signal="animation_finished" from="PLarge" to="." method="FreePizza"]

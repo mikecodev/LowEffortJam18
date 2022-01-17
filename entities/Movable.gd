@@ -79,7 +79,7 @@ func put_pos():
 		LOOK.right:
 			return Vector2(g.x+10, g.y-10)
 		LOOK.up:
-			return Vector2(g.x, g.y-20)
+			return Vector2(g.x, g.y-25)
 		LOOK.down:
 			return Vector2(g.x, g.y+10)
 	
@@ -222,7 +222,6 @@ func skill(num: int, _pos: Vector2):
 			Net.rpc("take_pizza")
 			
 func update_skin():
-	speed = 180
 	match skin:
 		TYPE.Player:
 			animated_sprite = $asPlayer
