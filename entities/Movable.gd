@@ -16,7 +16,7 @@ enum LOOK {
 	up, down, left, right
 }
 
-export var speed = 200
+export var speed = 250
 export var friction = 0.01
 export var acceleration = 0.1
 
@@ -243,5 +243,5 @@ func take_pizza(pizza_body):
 	if pizza_body.has_method("area_enabled"):
 		pizza_body.area_enabled(false)
 	$Tween.interpolate_property(pizza_body, "global_position",
-		pizza_body.global_position, put_pos(), 1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		pizza_body.global_position, put_pos(), 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()
