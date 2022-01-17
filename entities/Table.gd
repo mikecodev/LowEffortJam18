@@ -41,10 +41,12 @@ func FreeTable():
 	emit_signal("AddPoints", Tip)
 	Tip = 0
 	ClientsEating = 0
+	var GroupIdx = SittingClients[0].get_meta("GroupIdx")
 	for Client in SittingClients:
 		Client.disconnect("LeaveTip", self, "OnNpcSatisfied")
 		Client.disconnect("ImLeaving", self, "OnClientLeavingEarly")
 		Client.Leave()
+	ClientManager.ClientGroups.append(GroupIdx)
 	SittingClients = []
 	ClientManager.AddTable(self)
 
