@@ -222,9 +222,11 @@ func skill(num: int, _pos: Vector2):
 			Net.rpc("take_pizza")
 			
 func update_skin():
+	speed = 180
 	match skin:
 		TYPE.Player:
 			animated_sprite = $asPlayer
+			speed = 230
 		TYPE.Npc01:
 			animated_sprite = $asNpc01
 		TYPE.Npc02:

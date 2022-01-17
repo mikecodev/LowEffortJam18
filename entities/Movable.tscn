@@ -674,6 +674,7 @@ animation = "down"
 
 [node name="Bubble" parent="." instance=ExtResource( 10 )]
 position = Vector2( 2, -22 )
+z_index = 22
 animation = "empty"
 
 [node name="ActionArea" type="Area2D" parent="."]
