@@ -21,5 +21,5 @@ func _on_Local_button_up():
 	$Menu/Online/VBoxContainer/Online.disabled = true
 	Net.run_local()
 	Net.rpc("register_player", "Player")
-func _on_Nickname_text_changed(new_text):
+func _on_Nickname_text_changed(_new_text):
 	Nickname.modulate = Color.white

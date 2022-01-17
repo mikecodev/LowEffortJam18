@@ -28,7 +28,6 @@ func _process(_delta):
 	var input = Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
 	if input.length() > 0:
 		Net.rpc_unreliable_id(1, "move_player", input)
-	var action_take_put = Input.action_press("take_put")
 
 func _input(event):
 	if event is InputEventKey:

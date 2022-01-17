@@ -9,7 +9,6 @@ func _ready():
 		$Timer.start()
 
 func add_pizza(order):
-	print("add pizza")
 	var pos = Vector2(global_position.x, global_position.y + 12)
 	Net.register_pizza(order, pos)
 

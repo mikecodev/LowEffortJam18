@@ -2,6 +2,8 @@ extends Area2D
 
 class_name Pizza
 
+signal PizzaEaten(Pizza)
+
 var sprite: AnimatedSprite
 var pizza_type
 
@@ -38,5 +40,6 @@ func Consume():
 		sprite.playing = true
 
 func FreePizza():
-	Net.remove_pizza(name)
+	emit_signal("PizzaEaten", self)
+	Net.rpc("remove_pizza", get_path())
 
