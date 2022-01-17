@@ -37,6 +37,7 @@ func SetPizzaType(type):
 	sprite.visible = true
 
 func Consume():
+	area_enabled(false)
 	if sprite != null:
 		sprite.playing = true
 
