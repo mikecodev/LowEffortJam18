@@ -85,12 +85,16 @@ remotesync func look_to(name):
 	if Net.is_from_server():
 		match name:
 			LOOK.up:
+				looking_at = LOOK.up
 				update_play("idleup")
 			LOOK.down:
+				looking_at = LOOK.down
 				update_play("idledown")
 			LOOK.left:
+				looking_at = LOOK.left
 				update_play("idleleft")
 			LOOK.right:
+				looking_at = LOOK.right
 				update_play("idleright")
 	
 func _physics_process(delta):
