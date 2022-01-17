@@ -168,6 +168,14 @@ remotesync func remove_entity(pathname: String):
 			node.queue_free()
 			if players.has(node.get_instance_id()):
 				players.erase(node.get_instance_id())
+				
+remotesync func remove_pizza(pathname: String):
+	if is_from_server():
+		var node = get_node(pathname)
+		if world and node:
+			node.queue_free()
+			if pizzas.has(node.get_instance_id()):
+				pizzas.erase(node.get_instance_id())
 	
 # -----
 # UTILS

@@ -38,5 +38,5 @@ func Consume():
 		sprite.playing = true
 
 func FreePizza():
-	queue_free()
+	Net.remove_pizza(self)
 
