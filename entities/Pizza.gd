@@ -3,6 +3,7 @@ extends Area2D
 class_name Pizza
 
 var sprite: AnimatedSprite
+var pizza_type
 
 func area_enabled(yes):
 	if yes:
@@ -29,4 +30,5 @@ func SetPizzaType(type):
 			sprite = $VLarge
 		Bubble.STATUS.beer:
 			sprite = $Beer
+	pizza_type = type
 	sprite.visible = true

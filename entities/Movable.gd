@@ -3,6 +3,7 @@ extends KinematicBody2D
 class_name Movable
 
 signal path_done
+signal got_pizza(type)
 
 enum TYPE {
 	Player,
@@ -60,13 +61,13 @@ remotesync func take_put():
 			var g = global_position
 			match looking_at:
 				LOOK.left:
-					pizza_carried.global_position = Vector2(g.x-20, g.y)
+					pizza_carried.global_position = Vector2(g.x-15, g.y-10)
 				LOOK.right:
-					pizza_carried.global_position = Vector2(g.x+20, g.y)
+					pizza_carried.global_position = Vector2(g.x+15, g.y-10)
 				LOOK.up:
-					pizza_carried.global_position = Vector2(g.x, g.y-20)
+					pizza_carried.global_position = Vector2(g.x, g.y-25)
 				LOOK.down:
-					pizza_carried.global_position =Vector2(g.x, g.y+20)
+					pizza_carried.global_position =Vector2(g.x, g.y+15)
 			pizza_carried = null
 		else:
 			var pizzas = $ActionArea.get_overlapping_areas()
@@ -220,3 +221,9 @@ func update_skin():
 		TYPE.Npc03:
 			animated_sprite = $asNpc03
 	animated_sprite.visible = true
+
+
+func _on_pizza_near(area):
+	if is_network_master():
+		emit_signal("got_pizza", area.pizza_type)
+		print(TYPE.keys()[skin], " got_pizza ", Bubble.STATUS.keys()[area.pizza_type])
