@@ -75,6 +75,9 @@ func RepositionClients():
 func OnClientSpawn():
 	var GroupSize = Defs.Rand.randi_range(1, 4)
 	var ClientGroup = ClientGroups.pop_front()
+	if ClientGroups.size() < 1:
+		for Group in range(0, 30):
+			ClientGroups.append("ClientGroup" + str(Group))
 	for _ClientIdx in range(0, GroupSize):
 		var Client = CLIENT_SCENE.instance()
 		if _ClientIdx == 0:
