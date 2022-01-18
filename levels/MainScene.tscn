@@ -1,14 +1,12 @@
-[gd_scene load_steps=41 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://entities/GUI/HUD.tscn" type="PackedScene" id=1]
 [ext_resource path="res://levels/LevelController.gd" type="Script" id=2]
 [ext_resource path="res://entities/Table.tscn" type="PackedScene" id=3]
 [ext_resource path="res://sprites/tileset.png" type="Texture" id=4]
-[ext_resource path="res://audio/Music.ogg" type="AudioStream" id=5]
 [ext_resource path="res://entities/Cook.tscn" type="PackedScene" id=6]
 [ext_resource path="res://shaders/outline.gdshader" type="Shader" id=7]
 [ext_resource path="res://sprites/waiter.png" type="Texture" id=8]
-[ext_resource path="res://audio/People.ogg" type="AudioStream" id=9]
 
 [sub_resource type="ConvexPolygonShape2D" id=10]
 points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
@@ -733,15 +731,3 @@ z_index = 9
 [node name="Cook2" parent="." instance=ExtResource( 6 )]
 position = Vector2( 72, 12 )
 z_index = 9
-
-[node name="Music" type="AudioStreamPlayer2D" parent="."]
-position = Vector2( 170, 82 )
-stream = ExtResource( 5 )
-volume_db = -6.992
-autoplay = true
-
-[node name="People" type="AudioStreamPlayer2D" parent="."]
-position = Vector2( 170, 82 )
-stream = ExtResource( 9 )
-volume_db = -11.369
-autoplay = true

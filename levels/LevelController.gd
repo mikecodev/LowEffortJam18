@@ -3,10 +3,25 @@ extends Node2D
 const c_person = preload("res://entities/Movable.tscn")
 var entites = {}
 
+
 func _ready():
 	Net.set_current_level(self)
 	if is_network_master() and not Net.is_local:
 		ClientManager.Start()
+	else:
+		load_audio()
+
+func load_audio():
+	var music = load("res://audio/Music.ogg")
+	var people = load("res://audio/People.ogg")
+	var a1 = AudioStreamPlayer.new()
+	a1.stream = music
+	add_child(a1)
+	a1.playing = true
+	var a2 = AudioStreamPlayer.new()
+	a2.stream = music
+	add_child(a2)
+	a2.playing = true
 
 func Start():
 	Net.rpc("world_ready")
