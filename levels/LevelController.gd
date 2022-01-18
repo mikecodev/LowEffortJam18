@@ -16,10 +16,12 @@ func load_audio():
 	var people = load("res://audio/People.ogg")
 	var a1 = AudioStreamPlayer.new()
 	a1.stream = music
+	a1.volume_db = -6
 	add_child(a1)
 	a1.playing = true
 	var a2 = AudioStreamPlayer.new()
-	a2.stream = music
+	a2.stream = people
+	a2.volume_db = -12
 	add_child(a2)
 	a2.playing = true
 
