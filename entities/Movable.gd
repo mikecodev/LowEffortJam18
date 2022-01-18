@@ -60,7 +60,7 @@ remotesync func take_put():
 	if Net.is_from_server():
 		if pizza_carried:
 			pizza_carried.area_enabled(true)
-			var pos = put_pos()
+			var pos = put_pos(15)
 			pizza_carried.global_position = pos
 			pizza_carried = null
 		else:
@@ -71,17 +71,17 @@ remotesync func take_put():
 			pizza.area_enabled(false)
 			pizza_carried = pizza
 	
-func put_pos():
+func put_pos(mod = 0):
 	var g = global_position
 	match looking_at:
 		LOOK.left:
-			return Vector2(g.x-10, g.y-10)
+			return Vector2(g.x-10-mod, g.y-10)
 		LOOK.right:
-			return Vector2(g.x+10, g.y-10)
+			return Vector2(g.x+10+mod, g.y-10)
 		LOOK.up:
-			return Vector2(g.x, g.y-25)
+			return Vector2(g.x, g.y-20-mod)
 		LOOK.down:
-			return Vector2(g.x, g.y+10)
+			return Vector2(g.x, g.y+5+mod)
 	
 remotesync func look_to(name):
 	if Net.is_from_server():
@@ -244,5 +244,5 @@ func take_pizza(pizza_body):
 	if pizza_body.has_method("area_enabled"):
 		pizza_body.area_enabled(false)
 	$Tween.interpolate_property(pizza_body, "global_position",
-		pizza_body.global_position, put_pos(), 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+		pizza_body.global_position, put_pos(), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()

@@ -9,8 +9,13 @@ func _ready():
 		$Timer.start()
 
 func add_pizza(order):
-	var pos = Vector2(global_position.x, global_position.y + 12)
-	Net.register_pizza(order, pos)
+	var pos = Vector2(global_position.x, global_position.y -15)
+	var path = Net.register_pizza(order, pos)
+	var pizza = get_node(path)
+	var gp = pizza.global_position
+	$Tween.interpolate_property(pizza, "global_position",
+		gp, Vector2(gp.x, gp.y + 30), 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.start()
 
 func check_orders():
 	if is_network_master():

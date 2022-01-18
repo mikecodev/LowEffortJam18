@@ -26,7 +26,6 @@ script = ExtResource( 2 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 frames = SubResource( 3 )
-frame = 1
 playing = true
 
 [node name="Area2D" type="Area2D" parent="."]
@@ -38,5 +37,7 @@ position = Vector2( 0, 19 )
 shape = SubResource( 4 )
 
 [node name="Timer" type="Timer" parent="."]
+
+[node name="Tween" type="Tween" parent="."]
 
 [connection signal="timeout" from="Timer" to="." method="check_orders"]

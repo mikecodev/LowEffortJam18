@@ -96,6 +96,7 @@ func register_pizza(type, pos: Vector2):
 		world.add_child(pi)
 		pi.global_position = pos
 		broadcast_world()
+		return pi.get_path()
 	
 func register_person(name, pos = Vector2(5, 5), skin = 0, id = 0):
 	if is_network_master():
