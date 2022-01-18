@@ -5,8 +5,10 @@ func _ready():
 	Defs.connect("TipsUpdated", self, "OnTipsUpdated")
 	Defs.connect("LifesUpdated", self, "OnUpdatedLife")
 
-func OnUpdatedLife(NewVal):
+puppet func OnUpdatedLife(NewVal):
+	rpc("OnUpdatedLife", NewVal)
 	$CenterContainer/HBoxContainer/LifeValue.text = str(NewVal)
 
-func OnTipsUpdated(NewVal):
+puppet func OnTipsUpdated(NewVal):
+	rpc("OnTipsUpdated", NewVal)
 	$CenterContainer/HBoxContainer/PointsValue.text = str(NewVal)
